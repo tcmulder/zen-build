@@ -1,0 +1,13 @@
+/* line 4, ../sass/style.scss */
+body {
+  background: #ff0000;
+}
+
+/* line 8, ../sass/style.scss */
+html {
+  color: #2b2b2b;
+  -webkit-transition: 400ms;
+  -moz-transition: 400ms;
+  -o-transition: 400ms;
+  transition: 400ms;
+}

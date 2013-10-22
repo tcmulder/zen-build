@@ -1,0 +1,11 @@
+@import 'compass';
+$black: #2b2b2b;
+
+body{
+	background:#ff0000;
+}
+
+html {
+	color: $black;
+	@include transition(400ms);
+}
