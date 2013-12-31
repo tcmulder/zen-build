@@ -51,23 +51,27 @@ module.exports = function(grunt) {
         },
         shell: {
             exportLocalDb: {
+                command: [
+                    'echo "database export called"',
+                    'test -d .db || mkdir .db',
+                    'mysqldump -h<%= config.db.host %> -u<%= config.db.user %> -p<%= config.db.password %> <%= config.db.name %> > <%= config.dir.db %>db.sql',
+                    'ls -lah <%= config.dir.db %>db.sql | awk \'{ print "export ran: "$9" is "$5}\''
+                ].join('&&'),
                 options: {
                     stdout: true
-                },
-                command: [
-                    'mysqldump -h<%= config.db.host %> -u<%= config.db.user %> -p<%= config.db.password %> <%= config.db.name %> > <%= config.dir.db %>db.sql',
-                    'ls -lah <%= config.dir.db %>db.sql | awk \'{ print $9" is "$5}\''
-                ].join('&&')
+                }
             },
             importLocalDb: {
-                options: {
-                    stdout: true
-                },
                 command: [
+                    'echo "database import called"',
                     'mysqldump -h<%= config.db.host %> -u<%= config.db.user %> -p\'<%= config.db.password %>\' --no-data <%= config.db.name %> | grep ^DROP | mysql -h<%= config.db.host %> -u<%= config.db.user %> -p\'<%= config.db.password %>\' <%= config.db.name %>',
                     'mysql -h<%= config.db.host %> -u<%= config.db.user %> -p<%= config.db.password %> <%= config.db.name %> < <%= config.dir.db %>db.sql',
+                    'echo "import ran:"',
                     'mysql -h<%= config.db.host %> -u<%= config.db.user %> -p<%= config.db.password %> <%= config.db.name %> -e \'SHOW TABLES\''
-                ].join('&&')
+                ].join('&&'),
+                options: {
+                    stdout: true
+                }
             }
         }
     });
