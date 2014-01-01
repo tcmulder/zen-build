@@ -5,16 +5,17 @@ The standard grunt setup for Zenman automates common tasks when working on WordP
 ## Setup
 To start using the standard Zenman grunt setup, first you'll need to [install node](http://nodejs.org/) and [install grunt](http://gruntjs.com/getting-started#working-with-an-existing-grunt-project) on your system. With these installed system-wide, you're ready to add grunt to your project.
 
-1. Download this repository and add the ``.grunt`` directory to the root of your project.
-2. ``cd`` into the ``.grunt`` directory.
-3. Run the command ``npm install`` to install the necessary dependencies.
-4. Open the ``config.json`` file and modify the values to match those of your project.
+1. Download this repository and add the ``Gruntfile.js``, ``grunt-config.json``, and ``package.json`` files to the root of your project.
+2. Run the command ``npm install`` in the root of your project to install the necessary dependencies.
+3. Open the ``grunt-config.json`` file and modify the values to match those of your project.
+
+Note that if it's not already present you'll also want to make sure you add the  ``node_modules`` directory to your ``.gitignore`` file and commit that change before any other commits. 
 
 ## Usage
 The Zenman grunt setup handles a variety of common tasks and can be configured to handle many more. If you want to contribute, please update the README.md file to explain how to use what you have added.
 
 ### The Default ``grunt`` Command
-By default, if you ``cd`` into the ``.grunt`` directory and run the command ``grunt``, you will be running the ``watch`` task. This task will handle several tasks:
+By default, if you ``cd`` into the root of your project and run the command ``grunt``, you will be running the ``watch`` task. This task will handle several tasks:
 
 1. It will watch ``.scss`` and ``.sass`` files and compile them when modified.
 2. It will refresh the browser using a [livereload extension](http://feedback.livereload.com/knowledgebase/articles/86242-how-do-i-install-and-use-the-browser-extensions-) if changes to ``.css``, ``.html``, ``.php``, or ``.js`` files are detected.
@@ -77,7 +78,7 @@ Feel free to contribute additional functionality to the standard Zenman grunt se
         - ~~Import databases~~.
         - Serialized find and replace of database URLs.
     - Generate sprites.
-    - Generate data URIs.
+    - ~~Generate data URIs~~.
     - Generate icon fonts.
     - Autoprefix vender prefixes.
     - Lint JavaScript (don't force fixes though).
