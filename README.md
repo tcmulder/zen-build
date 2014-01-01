@@ -53,3 +53,41 @@ Feel free to contribute additional functionality to the standard Zenman grunt se
 - Decide all functionality we would eventually like to add.
     - Decide on command names for each piece of functionality.
     - Decide the bare minimum needed in ``config.json`` to support this functionality.
+
+### Future Features List
+- Initialize New Website.
+    -  Clone repository from gitlab.
+    -  Ask if it's a WordPress site.
+        -  Set up local hooks.
+            - Set up hook configuration file with project values.
+            - Set up pre-commit calls to scripts.
+                - Set up database dump.
+        - Set up wp-config.php file.
+        - Create database.
+        - Import default plugins.
+        - Download zemplate theme.
+        - Send URL to browser for WordPress installation.
+- Development Helpers.
+    - ~~Compile SASS/SCSS~~.
+    - ~~Watch for file changes~~.
+    - ~~Livereload when files change~~.
+    - ~~Run shell commands (used in other tasks)~~.
+    - Handle databases for merging/checkout etc.
+        - ~~Export databases~~.
+        - ~~Import databases~~.
+        - Serialized find and replace of database URLs.
+    - Generate sprites.
+    - Generate data URIs.
+    - Generate icon fonts.
+    - Autoprefix vender prefixes.
+    - Lint JavaScript (don't force fixes though).
+- Prep for Deployment.
+    - ~~Run shell commands (used in other tasks)~~.
+    - Dump database to use for deployment.
+    - Serialized find and replace of database URLs.
+    - Remove unneeded development files.
+    - Compress CSS.
+    - Concatenate JavaScript files.
+    - Compress JavaScript files.
+    - Compress images.
+    - Tar and Gzip site files.
