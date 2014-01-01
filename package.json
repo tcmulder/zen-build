@@ -1,11 +1,23 @@
 {
-  "name": "test-project",
-  "version": "1.0.0",
-  "devDependencies": {
-    "grunt": "~0.4.1",
-    "grunt-contrib-compass": "~0.6.0",
-    "grunt-contrib-watch": "~0.4.3",
-    "grunt-datauri": "~0.4.0",
-    "grunt-shell": "~0.6.1"
-  }
+	"name": "zen-grunt",
+	"version": "1.0.0",
+	"description": "The Zenman team's default grunt setup",
+	"author": {
+		"name": "The Zenman dev team",
+		"email": "dev@zenman.com",
+		"url": "http://www.zenman.com"
+	},
+	"homepage": "http://git.zenman.com/tcmulder/zen-grunt",
+	"license": "MIT",
+	"repository": {
+		"type": "git",
+		"url": "http://git.zenman.com/tcmulder/zen-grunt"
+	},
+	"devDependencies": {
+	"grunt": "~0.4.1",
+	"grunt-contrib-compass": "~0.6.0",
+	"grunt-contrib-watch": "~0.4.3",
+	"grunt-datauri": "~0.4.0",
+	"grunt-shell": "~0.6.1"
+	}
 }
