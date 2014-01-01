@@ -3,7 +3,7 @@ module.exports = function(grunt) {
     // grunt configuration
     grunt.initConfig({
         // project-specific configuration
-        config: grunt.file.readJSON('config.json'),
+        config: grunt.file.readJSON('grunt-config.json'),
         pkg: grunt.file.readJSON('package.json'),
         compass: {
             dist: {
@@ -30,7 +30,7 @@ module.exports = function(grunt) {
                 tasks: ['compass:dev']
             },
             livereload: {
-                files: ['<%= config.dir.template %>/**/*.{css,html,php,js}'],
+                files: ['<%= config.dir.theme %>/**/*.{css,html,php,js}'],
                 options: {
                     livereload: true
                 }
@@ -54,7 +54,7 @@ module.exports = function(grunt) {
                 command: [
                     'echo "database export called"',
                     'test -d .db || mkdir .db',
-                    'mysqldump -h<%= config.db.host %> -u<%= config.db.user %> -p<%= config.db.password %> <%= config.db.name %> > <%= config.dir.db %>db.sql',
+                    'mysqldump -h<%= config.db.local.host %> -u<%= config.db.local.user %> -p<%= config.db.local.password %> <%= config.db.local.name %> > <%= config.dir.db %>db.sql',
                     'ls -lah <%= config.dir.db %>db.sql | awk \'{ print "export ran: "$9" is "$5}\''
                 ].join('&&'),
                 options: {
@@ -64,10 +64,10 @@ module.exports = function(grunt) {
             importLocalDb: {
                 command: [
                     'echo "database import called"',
-                    'mysqldump -h<%= config.db.host %> -u<%= config.db.user %> -p\'<%= config.db.password %>\' --no-data <%= config.db.name %> | grep ^DROP | mysql -h<%= config.db.host %> -u<%= config.db.user %> -p\'<%= config.db.password %>\' <%= config.db.name %>',
-                    'mysql -h<%= config.db.host %> -u<%= config.db.user %> -p<%= config.db.password %> <%= config.db.name %> < <%= config.dir.db %>db.sql',
+                    'mysqldump -h<%= config.db.local.host %> -u<%= config.db.local.user %> -p\'<%= config.db.local.password %>\' --no-data <%= config.db.local.name %> | grep ^DROP | mysql -h<%= config.db.local.host %> -u<%= config.db.local.user %> -p\'<%= config.db.local.password %>\' <%= config.db.local.name %>',
+                    'mysql -h<%= config.db.local.host %> -u<%= config.db.local.user %> -p<%= config.db.local.password %> <%= config.db.local.name %> < <%= config.dir.db %>db.sql',
                     'echo "import ran:"',
-                    'mysql -h<%= config.db.host %> -u<%= config.db.user %> -p<%= config.db.password %> <%= config.db.name %> -e \'SHOW TABLES\''
+                    'mysql -h<%= config.db.local.host %> -u<%= config.db.local.user %> -p<%= config.db.local.password %> <%= config.db.local.name %> -e \'SHOW TABLES\''
                 ].join('&&'),
                 options: {
                     stdout: true
@@ -84,6 +84,6 @@ module.exports = function(grunt) {
 
     // task aliases
     grunt.registerTask('default', ['watch']);
-    grunt.registerTask('expdb', ['shell:exportLocalDb']);
-    grunt.registerTask('impdb', ['shell:importLocalDb']);
+    grunt.registerTask('dbexp', ['shell:exportLocalDb']);
+    grunt.registerTask('dbimp', ['shell:importLocalDb']);
 };
