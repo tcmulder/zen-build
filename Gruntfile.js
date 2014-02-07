@@ -6,6 +6,9 @@ module.exports = function(grunt) {
         config: grunt.file.readJSON('grunt-config.json'),
         pkg: grunt.file.readJSON('package.json'),
         compass: {
+            options:{
+                    require: 'sass-globbing'
+            },
             dist: {
                 options: {
                     sassDir: '<%= config.dir.sass %>',
