@@ -1,15 +1,16 @@
 {
 	"dir": {
-		"theme": 		"wp-content/themes/twentyfourteen/",
-		"sass": 		"wp-content/themes/twentyfourteen/sass/",
-		"css": 			"wp-content/themes/twentyfourteen/",
-		"images": 		"wp-content/themes/twentyfourteen/images/",
-		"datauris": 	"wp-content/themes/twentyfourteen/images/datauris/",
-		"db": 			".db/"
+		"theme": 		"wp-content/themes/_project_/",
+		"sass": 		"wp-content/themes/_project_/sass/",
+		"css": 			"wp-content/themes/_project_/",
+		"images": 		"wp-content/themes/_project_/images/",
+		"datauris": 	"wp-content/themes/_project_/images/datauris/",
+		"db": 			".db/",
+		"fonts": 		"wp-content/themes/_project_/fonts/"
 	},
 	"db": {
 		"local": {
-			"name": 		"l1_iortho",
+			"name": 		"l1__project_",
 			"user": 		"root",
 			"password": 	"root",
 			"host": 		"localhost"

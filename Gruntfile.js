@@ -76,6 +76,22 @@ module.exports = function(grunt) {
                     stdout: true
                 }
             }
+        },
+        webfont: {
+            icons: {
+                src: '<%= config.dir.fonts %>icons-raw/*.svg',
+                dest: '<%= config.dir.fonts %>icons',
+                destCss: '<%= config.dir.sass %>settings',
+                options: {
+                    htmlDemo: false,
+                    stylesheet: 'scss',
+                    relativeFontPath: 'fonts/icons/',
+                    templateOptions: {
+                        baseClass: 'icon',
+                        classPrefix: 'icon--'
+                    }
+                }
+            }
         }
     });
 
@@ -84,6 +100,7 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-datauri');
     grunt.loadNpmTasks('grunt-shell');
+    grunt.loadNpmTasks('grunt-webfont');
 
     // task aliases
     grunt.registerTask('default', ['watch']);
