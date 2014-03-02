@@ -7,7 +7,7 @@ module.exports = function(grunt) {
         pkg: grunt.file.readJSON('package.json'),
         compass: {
             options:{
-                    require: 'sass-globbing'
+                require: 'sass-globbing'
             },
             dist: {
                 options: {
@@ -21,16 +21,25 @@ module.exports = function(grunt) {
                     sassDir: '<%= config.dir.sass %>',
                     cssDir: '<%= config.dir.css %>',
                     imagesPath: '<%= config.dir.images %>',
-                    generatedImagesPath: "<%= config.dir.images %>",
-                    httpGeneratedImagesPath: "images",
+                    generatedImagesPath: "<%= config.dir.generatedImages %>",
+                    httpGeneratedImagesPath: "<%= config.dir.httpGeneratedImagesPath %>",
                     outputStyle: 'expanded'
                 }
+            }
+        },
+        autoprefixer: {
+            single_file: {
+                options: {
+                    browsers: ['last 2 version', 'ie 10', 'ie 9']
+                },
+                src: '<%= config.dir.css %>style.css',
+                dest: '<%= config.dir.css %>style.css'
             }
         },
         watch: {
             compass: {
                 files: ['<%= config.dir.sass %>/**/*.{scss,sass}'],
-                tasks: ['compass:dev']
+                tasks: ['compass:dev','autoprefixer']
             },
             livereload: {
                 files: ['<%= config.dir.theme %>/**/*.{css,html,php,js}'],
@@ -42,13 +51,13 @@ module.exports = function(grunt) {
         datauri: {
             default: {
                 options: {
-                    classPrefix: 'datauri-'
+                    classPrefix: 'datauri--'
                 },
                 src: [
-                    '<%= config.dir.datauris %>*.{png,jpg,gif,jpeg}',
+                    '<%= config.dir.dataURISrc %>*.{png,jpg,gif,jpeg}',
                 ],
                 dest: [
-                    '<%= config.dir.sass %>partials/_datauris.scss'
+                    '<%= config.dir.dataURIDest %>_datauris.scss'
                 ]
             }
         },
@@ -79,13 +88,13 @@ module.exports = function(grunt) {
         },
         webfont: {
             icons: {
-                src: '<%= config.dir.fonts %>icons-raw/*.svg',
-                dest: '<%= config.dir.fonts %>icons',
-                destCss: '<%= config.dir.sass %>settings',
+                src: '<%= config.dir.iconsSrc %>*.svg',
+                dest: '<%= config.dir.iconsDest %>',
+                destCss: '<%= config.dir.iconsCSSDest %>',
                 options: {
                     htmlDemo: false,
                     stylesheet: 'scss',
-                    relativeFontPath: 'fonts/icons/',
+                    relativeFontPath: '<%= config.dir.iconRelPath %>',
                     templateOptions: {
                         baseClass: 'icon',
                         classPrefix: 'icon--'
@@ -101,6 +110,7 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-datauri');
     grunt.loadNpmTasks('grunt-shell');
     grunt.loadNpmTasks('grunt-webfont');
+    grunt.loadNpmTasks('grunt-autoprefixer');
 
     // task aliases
     grunt.registerTask('default', ['watch']);
