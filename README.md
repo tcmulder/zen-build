@@ -9,7 +9,7 @@ To start using the standard Zenman grunt setup, first you'll need to [install no
 2. Run the command ``npm install`` in the root of your project to install the necessary dependencies.
 3. Open the ``grunt-config.json`` file and modify the values to match those of your project.
 
-Note that if it's not already present you'll also want to make sure you add the  ``node_modules`` directory to your ``.gitignore`` file and commit that change before any other commits. 
+Note that if it's not already present you'll also want to make sure you add the  ``node_modules`` directory to your ``.gitignore`` file and commit that change before any other commits.
 
 ## Usage
 The Zenman grunt setup handles a variety of common tasks and can be configured to handle many more. If you want to contribute, please update the README.md file to explain how to use what you have added.
@@ -18,7 +18,8 @@ The Zenman grunt setup handles a variety of common tasks and can be configured t
 By default, if you ``cd`` into the root of your project and run the command ``grunt``, you will be running the ``watch`` task. This task will handle several tasks:
 
 1. It will watch ``.scss`` and ``.sass`` files and compile them when modified.
-2. It will refresh the browser using a [livereload extension](http://feedback.livereload.com/knowledgebase/articles/86242-how-do-i-install-and-use-the-browser-extensions-) if changes to ``.css``, ``.html``, ``.php``, or ``.js`` files are detected.
+2. It will run autoprefixer on the style.css file.
+3. It will refresh the browser using a [livereload extension](http://feedback.livereload.com/knowledgebase/articles/86242-how-do-i-install-and-use-the-browser-extensions-) if changes to ``.css``, ``.html``, ``.php``, or ``.js`` files are detected.
 
 Note that since compilation of SASS will result in CSS file changes, the browser will refresh after SASS compilation.
 
@@ -79,8 +80,8 @@ Feel free to contribute additional functionality to the standard Zenman grunt se
         - Serialized find and replace of database URLs.
     - Generate sprites.
     - ~~Generate data URIs~~.
-    - Generate icon fonts.
-    - Autoprefix vender prefixes.
+    - ~~Generate icon fonts~~.
+    - ~~Autoprefix vender prefixes~~.
     - Lint JavaScript (don't force fixes though).
 - Prep for Deployment.
     - ~~Run shell commands (used in other tasks)~~.
