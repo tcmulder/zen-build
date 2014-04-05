@@ -6,8 +6,9 @@
     ::Plugins
 \*------------------------------------*/
 var livereload = require('gulp-livereload'),
-    compass = require('gulp-compass'),
     server = livereload(),
+    compass = require('gulp-compass'),
+    prefix = require('gulp-autoprefixer'),
     gulp = require('gulp');
 
 /*------------------------------------*\
@@ -21,8 +22,10 @@ gulp.task('compass', function() {
             css: 'wp-content/themes/zemplate/',
             sass: 'wp-content/themes/zemplate/sass',
             image: 'wp-content/themes/zemplate/images',
+            style: 'expanded',
             require: ['sass-globbing']
         }))
+        .pipe(prefix('last 2 version', 'ie 10', 'ie 9'))
         .pipe(gulp.dest('wp-content/themes/zemplate/.'));
 });
 
