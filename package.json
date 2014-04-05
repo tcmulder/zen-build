@@ -1,0 +1,20 @@
+{
+  "name": "the-site",
+  "version": "0.0.0",
+  "description": "First gulp of gulp",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@git.zenman.com:tcmulder/zen-grunt"
+  },
+  "author": "@tcmulder",
+  "license": "MIT",
+  "devDependencies": {
+    "gulp": "^3.6.0",
+    "gulp-compass": "^1.1.8",
+    "gulp-sass": "^0.7.1"
+  }
+}
