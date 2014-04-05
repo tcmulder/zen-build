@@ -1,7 +1,20 @@
-var gulp = require('gulp');
-var compass = require('gulp-compass');
+/*------------------------------------*\
+    ::Variables
+\*------------------------------------*/
 
-// CSS
+/*------------------------------------*\
+    ::Plugins
+\*------------------------------------*/
+var livereload = require('gulp-livereload'),
+    compass = require('gulp-compass'),
+    server = livereload(),
+    gulp = require('gulp');
+
+/*------------------------------------*\
+    ::Task Definitions
+\*------------------------------------*/
+
+//css
 gulp.task('compass', function() {
     gulp.src('wp-content/themes/zemplate/sass/*.scss')
         .pipe(compass({
@@ -13,11 +26,15 @@ gulp.task('compass', function() {
         .pipe(gulp.dest('wp-content/themes/zemplate/.'));
 });
 
-
-// Watch Files For Changes
+//watch and live reload
 gulp.task('watch', function() {
     gulp.watch('./wp-content/themes/zemplate/sass/*.scss', ['compass']);
+    gulp.watch('./wp-content/themes/zemplate/**/*.{css,html,php,js}').on('change', function(file) {
+        server.changed(file.path);
+    });
 });
 
-// Default Task
+/*------------------------------------*\
+    ::Task Combinations
+\*------------------------------------*/
 gulp.task('default', ['watch']);
