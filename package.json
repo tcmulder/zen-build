@@ -17,6 +17,8 @@
     "gulp-compass": "^1.1.8",
     "gulp-livereload": "^1.2.0",
     "tiny-lr": "0.0.5",
-    "gulp-autoprefixer": "0.0.6"
+    "gulp-autoprefixer": "0.0.6",
+    "gulp-iconfont": "0.0.8",
+    "gulp-iconfont-css": "0.0.9"
   }
 }

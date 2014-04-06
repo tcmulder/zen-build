@@ -9,6 +9,8 @@ var livereload = require('gulp-livereload'),
     server = livereload(),
     compass = require('gulp-compass'),
     prefix = require('gulp-autoprefixer'),
+    iconfont = require('gulp-iconfont'),
+    iconfontCss = require('gulp-iconfont-css'),
     gulp = require('gulp');
 
 /*------------------------------------*\
@@ -29,9 +31,25 @@ gulp.task('compass', function() {
         .pipe(gulp.dest('wp-content/themes/zemplate/.'));
 });
 
+//webfonts
+gulp.task('webfont', function(){
+    gulp.src(['wp-content/themes/zemplate/fonts/icons-raw/*.svg'])
+        .pipe(iconfontCss({
+            path: 'wp-content/themes/zemplate/sass/stars/zemplate/icons_template.scss-template',
+            fontName: 'icon',
+            targetPath: '../../sass/planets/base/_icons.scss',
+            fontPath: 'fonts/icons/'
+        }))
+        .pipe(iconfont({
+            fontName: 'icon'
+        }))
+        .pipe(gulp.dest('wp-content/themes/zemplate/fonts/icons/'));
+});
+
 //watch and live reload
 gulp.task('watch', function() {
     gulp.watch('./wp-content/themes/zemplate/sass/*.scss', ['compass']);
+    gulp.watch('./wp-content/themes/zemplate/fonts/icons-raw/*.svg', ['webfont']);
     gulp.watch('./wp-content/themes/zemplate/**/*.{css,html,php,js}').on('change', function(file) {
         server.changed(file.path);
     });
