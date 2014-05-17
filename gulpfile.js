@@ -5,28 +5,39 @@
 /*------------------------------------*\
     ::Plugins
 \*------------------------------------*/
+var gulp = require('gulp');
+var livereload = require('gulp-livereload'),
+    server = livereload();
 var uglify = require('gulp-uglifyjs');
+var jshint = require('gulp-jshint');
 var compass = require('gulp-compass');
 var prefix = require('gulp-autoprefixer');
 var iconfont = require('gulp-iconfont');
 var iconfontCss = require('gulp-iconfont-css');
-var gulp = require('gulp');
 var exit = require('gulp-exit');
-var livereload = require('gulp-livereload');
-var server = livereload();
 
 /*------------------------------------*\
     ::Task Definitions
 \*------------------------------------*/
 
+//js
 gulp.task('js', function() {
     gulp.src('wp-content/themes/zemplate/js/src/**/*.js')
+        .pipe(jshint())
+        .pipe(jshint.reporter('default'))
         .pipe(uglify('scripts.min.js', {
             outSourceMap: true
         }))
         .pipe(gulp.dest('wp-content/themes/zemplate/js/dist/'))
         .pipe(exit());
 });
+
+// gulp.task('lint', function() {
+//   return gulp.src('wp-content/themes/zemplate/js/dist/scripts.min.js')
+//     .pipe(jshint())
+//     .pipe(jshint.reporter('default'))
+//     .pipe(exit());
+// });
 
 //css
 gulp.task('compass', function() {

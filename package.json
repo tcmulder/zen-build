@@ -21,6 +21,7 @@
     "gulp-iconfont": "0.0.8",
     "gulp-iconfont-css": "0.0.9",
     "gulp-exit": "0.0.2",
-    "gulp-uglifyjs": "^0.3.0"
+    "gulp-uglifyjs": "^0.3.0",
+    "gulp-jshint": "^1.6.1"
   }
 }
