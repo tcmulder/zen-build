@@ -48,6 +48,9 @@ which would compile to
 
 Data URIs are particularly useful for creating a sort of image sprite for images that must be tiled. Normal sprites won't allow you to just repeat one pattern from the file, but using data URIs you can still save HTTP requests by combining a few images in your CSS.
 
+### The ``webfont`` Command
+Running the ``webfont`` command by default will cause ``.svg`` files in the ``fonts/icons-raw`` to be compiled into the ``fonts/icons`` directory. You can then use the icon fonts by adding ``.icon`` and ``.icon--original_svg_filename`` classes to elements in your stylesheet.
+
 ## To Do:
 Feel free to contribute additional functionality to the standard Zenman grunt setup.
 
