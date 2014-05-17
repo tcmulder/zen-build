@@ -5,8 +5,7 @@
 /*------------------------------------*\
     ::Plugins
 \*------------------------------------*/
-var concat = require('gulp-concat');
-var uglify = require('gulp-uglify');
+var uglify = require('gulp-uglifyjs');
 var compass = require('gulp-compass');
 var prefix = require('gulp-autoprefixer');
 var iconfont = require('gulp-iconfont');
@@ -20,11 +19,11 @@ var server = livereload();
     ::Task Definitions
 \*------------------------------------*/
 
-//javascript
 gulp.task('js', function() {
-    gulp.src('wp-content/themes/zemplate/js/src/*.js')
-        .pipe(concat('scripts.min.js'))
-        .pipe(uglify())
+    gulp.src('wp-content/themes/zemplate/js/src/**/*.js')
+        .pipe(uglify('scripts.min.js', {
+            outSourceMap: true
+        }))
         .pipe(gulp.dest('wp-content/themes/zemplate/js/dist/'))
         .pipe(exit());
 });

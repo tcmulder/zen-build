@@ -20,8 +20,7 @@
     "gulp-autoprefixer": "0.0.6",
     "gulp-iconfont": "0.0.8",
     "gulp-iconfont-css": "0.0.9",
-    "gulp-concat": "^2.2.0",
     "gulp-exit": "0.0.2",
-    "gulp-uglify": "^0.3.0"
+    "gulp-uglifyjs": "^0.3.0"
   }
 }
