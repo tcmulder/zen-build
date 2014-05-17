@@ -6,8 +6,7 @@
     ::Plugins
 \*------------------------------------*/
 var gulp = require('gulp');
-var livereload = require('gulp-livereload'),
-    server = livereload();
+var livereload = require('gulp-livereload');
 var uglify = require('gulp-uglifyjs');
 var jshint = require('gulp-jshint');
 var compass = require('gulp-compass');
@@ -22,19 +21,18 @@ var exit = require('gulp-exit');
 
 //js
 gulp.task('js', function() {
-    gulp.src('./wp-content/themes/zemplate/js/src/**/*.js')
+    gulp.src('wp-content/themes/zemplate/js/src/**/*.js')
         .pipe(jshint())
         .pipe(jshint.reporter('default'))
         .pipe(uglify('scripts.min.js', {
             outSourceMap: 'src/sourcemap.map',
             basePath: '/wp-content/themes/zemplate/js/src/'
         }))
-        .pipe(gulp.dest('wp-content/themes/zemplate/js/'))
-        .pipe(exit());
+        .pipe(gulp.dest('wp-content/themes/zemplate/js/'));
 });
 
 //css
-gulp.task('compass', function() {
+gulp.task('css', function() {
     gulp.src('wp-content/themes/zemplate/sass/*.scss')
         .pipe(compass({
             sourcemap: true,
@@ -66,9 +64,17 @@ gulp.task('webfont', function(){
 
 //watch and live reload
 gulp.task('watch', function() {
-    gulp.watch('./wp-content/themes/zemplate/sass/**/*.scss', ['compass']);
-    gulp.watch('./wp-content/themes/zemplate/fonts/icons-raw/*.svg', ['webfont']);
-    gulp.watch('./wp-content/themes/zemplate/**/*.{css,html,php,js}').on('change', function(file) {
+
+    //establish server
+    var server = livereload();
+
+    //run tasks when watch notices changes
+    gulp.watch('wp-content/themes/zemplate/sass/**/*.scss', ['css']);
+    gulp.watch('wp-content/themes/zemplate/js/src/**/*.js', ['js']);
+    gulp.watch('wp-content/themes/zemplate/fonts/icons-raw/*.svg', ['webfont']);
+
+    //reload the project if certain files change
+    gulp.watch('wp-content/themes/zemplate/**/*.{css,html,php,js,svg}').on('change', function(file) {
         server.changed(file.path);
     });
 });
