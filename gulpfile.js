@@ -48,7 +48,7 @@ gulp.task('webfont', function(){
 
 //watch and live reload
 gulp.task('watch', function() {
-    gulp.watch('./wp-content/themes/zemplate/sass/*.scss', ['compass']);
+    gulp.watch('./wp-content/themes/zemplate/sass/**/*.scss', ['compass']);
     gulp.watch('./wp-content/themes/zemplate/fonts/icons-raw/*.svg', ['webfont']);
     gulp.watch('./wp-content/themes/zemplate/**/*.{css,html,php,js}').on('change', function(file) {
         server.changed(file.path);
