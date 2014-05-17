@@ -14,7 +14,7 @@
   "license": "MIT",
   "devDependencies": {
     "gulp": "^3.6.0",
-    "gulp-compass": "^1.1.8",
+    "gulp-compass": "^1.1.9",
     "gulp-livereload": "^1.2.0",
     "tiny-lr": "0.0.5",
     "gulp-autoprefixer": "0.0.6",

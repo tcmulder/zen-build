@@ -21,10 +21,12 @@ var livereload = require('gulp-livereload'),
 gulp.task('compass', function() {
     gulp.src('wp-content/themes/zemplate/sass/*.scss')
         .pipe(compass({
+            sourcemap: true,
+            quiet: true,
             css: 'wp-content/themes/zemplate/',
             sass: 'wp-content/themes/zemplate/sass',
             image: 'wp-content/themes/zemplate/images',
-            style: 'expanded',
+            style: 'compressed',
             require: ['sass-globbing']
         }))
         .pipe(prefix('last 2 version', 'ie 10', 'ie 9'))
