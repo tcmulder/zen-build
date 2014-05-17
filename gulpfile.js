@@ -22,22 +22,16 @@ var exit = require('gulp-exit');
 
 //js
 gulp.task('js', function() {
-    gulp.src('wp-content/themes/zemplate/js/src/**/*.js')
+    gulp.src('./wp-content/themes/zemplate/js/src/**/*.js')
         .pipe(jshint())
         .pipe(jshint.reporter('default'))
         .pipe(uglify('scripts.min.js', {
-            outSourceMap: true
+            outSourceMap: 'src/sourcemap.map',
+            basePath: '/wp-content/themes/zemplate/js/src/'
         }))
-        .pipe(gulp.dest('wp-content/themes/zemplate/js/dist/'))
+        .pipe(gulp.dest('wp-content/themes/zemplate/js/'))
         .pipe(exit());
 });
-
-// gulp.task('lint', function() {
-//   return gulp.src('wp-content/themes/zemplate/js/dist/scripts.min.js')
-//     .pipe(jshint())
-//     .pipe(jshint.reporter('default'))
-//     .pipe(exit());
-// });
 
 //css
 gulp.task('compass', function() {
