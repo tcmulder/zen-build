@@ -5,17 +5,29 @@
 /*------------------------------------*\
     ::Plugins
 \*------------------------------------*/
-var livereload = require('gulp-livereload'),
-    server = livereload(),
-    compass = require('gulp-compass'),
-    prefix = require('gulp-autoprefixer'),
-    iconfont = require('gulp-iconfont'),
-    iconfontCss = require('gulp-iconfont-css'),
-    gulp = require('gulp');
+var concat = require('gulp-concat');
+var uglify = require('gulp-uglify');
+var compass = require('gulp-compass');
+var prefix = require('gulp-autoprefixer');
+var iconfont = require('gulp-iconfont');
+var iconfontCss = require('gulp-iconfont-css');
+var gulp = require('gulp');
+var exit = require('gulp-exit');
+var livereload = require('gulp-livereload');
+var server = livereload();
 
 /*------------------------------------*\
     ::Task Definitions
 \*------------------------------------*/
+
+//javascript
+gulp.task('js', function() {
+    gulp.src('wp-content/themes/zemplate/js/src/*.js')
+        .pipe(concat('scripts.min.js'))
+        .pipe(uglify())
+        .pipe(gulp.dest('wp-content/themes/zemplate/js/dist/'))
+        .pipe(exit());
+});
 
 //css
 gulp.task('compass', function() {
