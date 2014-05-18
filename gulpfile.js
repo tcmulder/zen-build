@@ -57,10 +57,10 @@ gulp.task('css', function() {
 });
 
 //webfonts
-gulp.task('webfont', function(){
+gulp.task('icons', function(){
     gulp.src(['wp-content/themes/zemplate/fonts/icons-raw/*.svg'])
         .pipe(iconfontCss({
-            path: 'wp-content/themes/zemplate/sass/stars/zemplate/icons_template.scss-template',
+            path: 'icons-template.scss-template',
             fontName: 'icon',
             targetPath: '../../sass/planets/base/_icons.scss',
             fontPath: 'fonts/icons/'
@@ -80,7 +80,7 @@ gulp.task('watch', function() {
     //run tasks when watch notices changes
     gulp.watch('wp-content/themes/zemplate/sass/**/*.scss', ['css']);
     gulp.watch('wp-content/themes/zemplate/js/src/**/*.js', ['js']);
-    gulp.watch('wp-content/themes/zemplate/fonts/icons-raw/*.svg', ['webfont']);
+    gulp.watch('wp-content/themes/zemplate/fonts/icons-raw/*.svg', ['icons']);
 
     //reload the project if certain files change
     gulp.watch('wp-content/themes/zemplate/**/*.{css,html,php,js,svg}').on('change', function(file) {
