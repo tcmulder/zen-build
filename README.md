@@ -1,3 +1,6 @@
+**UPDATE FOR GULP**
+
+
 # Zenman grunt Setup
 ## Description
 The standard grunt setup for Zenman automates common tasks when working on WordPress projects.
