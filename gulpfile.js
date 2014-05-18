@@ -16,6 +16,14 @@ var iconfontCss = require('gulp-iconfont-css');
 var exit = require('gulp-exit');
 
 /*------------------------------------*\
+    ::Handle Errors
+\*------------------------------------*/
+function handleError(err) {
+  console.log(err.toString());
+  this.emit('end');
+}
+
+/*------------------------------------*\
     ::Task Definitions
 \*------------------------------------*/
 
@@ -43,6 +51,7 @@ gulp.task('css', function() {
             style: 'compressed',
             require: ['sass-globbing']
         }))
+        .on("error", handleError)
         .pipe(prefix('last 2 version', 'ie 10', 'ie 9'))
         .pipe(gulp.dest('wp-content/themes/zemplate/.'));
 });
