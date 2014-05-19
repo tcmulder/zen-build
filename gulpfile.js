@@ -80,7 +80,7 @@ gulp.task('sprite', function () {
             defs: true,
             generatePreview: false
         }))
-        .pipe(gulp.dest("wp-content/themes/zemplate/images/svg-sprite"));
+        .pipe(gulp.dest("wp-content/themes/zemplate/images/svg-sprites"));
 });
 
 /*------------------------------------*\
