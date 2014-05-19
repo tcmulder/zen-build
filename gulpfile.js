@@ -13,6 +13,7 @@ var compass = require('gulp-compass');
 var prefix = require('gulp-autoprefixer');
 var iconfont = require('gulp-iconfont');
 var iconfontCss = require('gulp-iconfont-css');
+var svgSprites = require('gulp-svg-sprites');
 var exit = require('gulp-exit');
 
 /*------------------------------------*\
@@ -71,16 +72,31 @@ gulp.task('icons', function(){
         .pipe(gulp.dest('wp-content/themes/zemplate/fonts/icons/'));
 });
 
+//svg sprites
+var svg = svgSprites.svg;
+gulp.task('sprite', function () {
+    gulp.src('wp-content/themes/zemplate/images/svg-raw/*.svg')
+        .pipe(svg({
+            defs: true,
+            generatePreview: false
+        }))
+        .pipe(gulp.dest("wp-content/themes/zemplate/images/svg-sprite"));
+});
+
+/*------------------------------------*\
+    ::Watch
+\*------------------------------------*/
+
+//establish server
+var server = livereload();
 //watch and live reload
 gulp.task('watch', function() {
-
-    //establish server
-    var server = livereload();
 
     //run tasks when watch notices changes
     gulp.watch('wp-content/themes/zemplate/sass/**/*.scss', ['css']);
     gulp.watch('wp-content/themes/zemplate/js/src/**/*.js', ['js']);
     gulp.watch('wp-content/themes/zemplate/fonts/icons-raw/*.svg', ['icons']);
+    gulp.watch('wp-content/themes/zemplate/images/svg-raw/*.svg', ['sprite']);
 
     //reload the project if certain files change
     gulp.watch('wp-content/themes/zemplate/**/*.{css,html,php,js,svg}').on('change', function(file) {
