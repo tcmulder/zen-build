@@ -14,6 +14,7 @@ var prefix = require('gulp-autoprefixer');
 var iconfont = require('gulp-iconfont');
 var iconfontCss = require('gulp-iconfont-css');
 var svgSprites = require('gulp-svg-sprites');
+var shell = require('gulp-shell')
 var exit = require('gulp-exit');
 
 /*------------------------------------*\
@@ -81,6 +82,15 @@ gulp.task('sprite', function () {
             generatePreview: false
         }))
         .pipe(gulp.dest("wp-content/themes/zemplate/images/svg-sprites"));
+});
+
+//shell hello world
+gulp.task('example', function () {
+  return gulp.src('*.js', {read: false})
+    .pipe(shell([
+      'echo  <%= file.path %>',
+      'ls -l <%= file.path %>'
+    ]))
 });
 
 /*------------------------------------*\
