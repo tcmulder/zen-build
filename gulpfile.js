@@ -84,13 +84,36 @@ gulp.task('sprite', function () {
         .pipe(gulp.dest("wp-content/themes/zemplate/images/svg-sprites"));
 });
 
-//shell hello world
-gulp.task('example', function () {
+//database
+var config = {
+    db: {
+        local: {
+            name: 'l1_whv',
+            user: 'root',
+            pass: 'root',
+            host: 'localhost',
+            dumpDir: '.db/'
+        }
+    }
+};
+gulp.task('db-exp', function () {
   return gulp.src('*.js', {read: false})
     .pipe(shell([
-      'echo  <%= file.path %>',
-      'ls -l <%= file.path %>'
-    ]))
+        'echo "database export called"',
+        'test -d '+config.db.local.dumpDir+' || mkdir '+config.db.local.dumpDir+'',
+        'mysqldump -h'+config.db.local.host+' -u'+config.db.local.user+' -p\''+config.db.local.pass+'\' l1_whv > '+config.db.local.dumpDir+'db.sql',
+        'ls -lah '+config.db.local.dumpDir+'db.sql | awk \'{ print "export ran: "$9" is "$5}\''
+    ].join('&&')))
+});
+gulp.task('db-imp', function () {
+  return gulp.src('*.js', {read: false})
+    .pipe(shell([
+        'echo "database import called"',
+        'mysqldump -h'+config.db.local.host+' -u'+config.db.local.user+' -p\''+config.db.local.pass+'\' --no-data '+config.db.local.name+' | grep ^DROP | mysql -h'+config.db.local.host+' -u'+config.db.local.user+' -p\''+config.db.local.pass+'\' '+config.db.local.name+'',
+        'mysql -h'+config.db.local.host+' -u'+config.db.local.user+' -p'+config.db.local.pass+' '+config.db.local.name+' < '+config.db.local.dumpDir+'db.sql',
+        'echo "import ran:"',
+        'mysql -h'+config.db.local.host+' -u'+config.db.local.user+' -p'+config.db.local.pass+' '+config.db.local.name+' -e \'SHOW TABLES\''
+    ].join('&&')))
 });
 
 /*------------------------------------*\
