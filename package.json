@@ -13,19 +13,19 @@
   "author": "@tcmulder",
   "license": "MIT",
   "devDependencies": {
-    "gulp": "^3.6.0",
-    "gulp-compass": "^1.1.9",
-    "gulp-livereload": "^1.2.0",
-    "tiny-lr": "0.0.5",
-    "gulp-autoprefixer": "0.0.6",
-    "gulp-iconfont": "0.0.8",
-    "gulp-iconfont-css": "0.0.9",
-    "gulp-exit": "0.0.2",
-    "gulp-uglifyjs": "^0.3.0",
-    "gulp-jshint": "^1.6.1",
-    "install": "^0.1.7",
-    "npm": "^1.4.10",
-    "gulp-svg-sprites": "^0.1.1",
-    "gulp-shell": "~0.2.8"
+    "gulp": "*",
+    "gulp-compass": "*",
+    "gulp-livereload": "*",
+    "tiny-lr": "*",
+    "gulp-autoprefixer": "*",
+    "gulp-iconfont": "*",
+    "gulp-iconfont-css": "*",
+    "gulp-exit": "*",
+    "gulp-uglifyjs": "*",
+    "gulp-jshint": "*",
+    "install": "*",
+    "npm": "*",
+    "gulp-svg-sprites": "*",
+    "gulp-shell": "*"
   }
 }
