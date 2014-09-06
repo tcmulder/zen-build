@@ -16,6 +16,7 @@ iconfontCss = require('gulp-iconfont-css'),
 svgSprites = require('gulp-svg-sprites'),
 shell = require('gulp-shell'),
 notify = require('gulp-notify'),
+cache = require('gulp-cache'),
 imagemin = require('gulp-imagemin'),
 exit = require('gulp-exit');
 
