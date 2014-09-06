@@ -37,6 +37,9 @@ The ``gulp icons`` command will run [gulp-iconfont](https://www.npmjs.org/packag
 ### The ``gulp sprite`` Command
 The ``gulp sprite`` command will run [gulp-svg-sprites](https://www.npmjs.org/package/gulp-svg-sprites) to compile ``images/svg-raw/*.svg`` files into the ``images/svg-sprites/sprites/svg-defs.svg`` file. You can use this file as your [SVG sprite](http://css-tricks.com/svg-sprites-use-better-icon-fonts/).
 
+### The ``gulp img`` Command
+The ``gulp img`` command will run [gulp-imagemin](https://www.npmjs.org/package/gulp-imagemin) to compress ``jpg png svg`` and ``gif`` files into the ``images`` folder. Compression is set to 5 of 7 and the ``viewbox`` is set to be ignored to retain dimensions from illustrator.
+
 ## To Do:
 Feel free to contribute additional functionality to the Zenman gulp setup.
 
