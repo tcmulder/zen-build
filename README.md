@@ -78,7 +78,8 @@ Feel free to contribute additional functionality to the Zenman gulp setup.
     - ~~Concatenate JavaScript files.~~
     - ~~Compress JavaScript files.~~
     - ~~Establish JavaScript sourcemap.~~
-    - Compress images.
+    - ~~Compress images.~~
+    - ~~Add system Notifications.~~
 - Prep for Deployment.
     - ~~Run shell commands (used in other tasks)~~.
     - Dump database to use for deployment.
