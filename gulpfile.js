@@ -15,6 +15,7 @@ iconfont = require('gulp-iconfont'),
 iconfontCss = require('gulp-iconfont-css'),
 svgSprites = require('gulp-svg-sprites'),
 shell = require('gulp-shell'),
+notify = require('gulp-notify'),
 imagemin = require('gulp-imagemin'),
 exit = require('gulp-exit');
 
@@ -55,6 +56,8 @@ gulp.task('css', function() {
             require: ['sass-globbing']
         }))
         .on("error", handleError)
+        .on("error", notify.onError(function(error){return error.message;}))
+        .pipe(notify({ message: 'Compiled Successfully!' }))
         .pipe(prefix('last 2 version', 'ie 10', 'ie 9'))
         .pipe(gulp.dest('wp-content/themes/__MYTHEMEHERE__/.'));
 });
