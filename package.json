@@ -26,6 +26,8 @@
     "install": "*",
     "npm": "*",
     "gulp-svg-sprites": "*",
-    "gulp-shell": "*"
+    "gulp-shell": "*",
+    "gulp-imagemin": "*",
+    "gulp-notify": "*"
   }
 }
