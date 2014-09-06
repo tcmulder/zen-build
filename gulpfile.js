@@ -15,6 +15,7 @@ iconfont = require('gulp-iconfont'),
 iconfontCss = require('gulp-iconfont-css'),
 svgSprites = require('gulp-svg-sprites'),
 shell = require('gulp-shell'),
+imagemin = require('gulp-imagemin'),
 exit = require('gulp-exit');
 
 /*------------------------------------*\
@@ -82,6 +83,19 @@ gulp.task('sprite', function () {
             generatePreview: false
         }))
         .pipe(gulp.dest("wp-content/themes/__MYTHEMEHERE__/images/svg-sprites"));
+});
+
+//images (only will min images that have not been cached)
+gulp.task('img', function () {
+    return gulp.src('wp-content/themes/zemplate/images/**/*')
+        .pipe(cache(imagemin({
+            svgoPlugins: [{removeViewBox: false}],
+            optimizationLevel: 5,
+            progressive: true,
+            interlaced: true })
+        ))
+        .pipe(gulp.dest('wp-content/themes/zemplate/images/'))
+        .pipe(notify({ message: 'Images task complete' }));
 });
 
 //database
