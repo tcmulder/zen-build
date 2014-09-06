@@ -87,14 +87,14 @@ gulp.task('sprite', function () {
 
 //images (only will min images that have not been cached)
 gulp.task('img', function () {
-    return gulp.src('wp-content/themes/zemplate/images/**/*')
+    return gulp.src('wp-content/themes/__MYTHEMEHERE__/images/**/*')
         .pipe(cache(imagemin({
             svgoPlugins: [{removeViewBox: false}],
             optimizationLevel: 5,
             progressive: true,
             interlaced: true })
         ))
-        .pipe(gulp.dest('wp-content/themes/zemplate/images/'))
+        .pipe(gulp.dest('wp-content/themes/__MYTHEMEHERE__/images/'))
         .pipe(notify({ message: 'Images task complete' }));
 });
 
