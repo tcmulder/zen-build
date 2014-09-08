@@ -79,7 +79,7 @@ gulp.task('icons', function(){
 });
 
 //svg sprites
-var svg = svgSprites.svg;
+var svg = svgSprites;
 gulp.task('sprite', function () {
     gulp.src('wp-content/themes/__MYTHEMEHERE__/images/svg-raw/*.svg')
         .pipe(svg({
