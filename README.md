@@ -1,6 +1,6 @@
-# Zenman gulp Setup
+# Zenman gulp Setup - tcmulder variant
 ## Description
-The standard gulp setup for Zenman automates common tasks when working on WordPress projects.
+This tcmulder variant has locked package.json versions. The standard gulp setup for Zenman automates common tasks when working on WordPress projects.
 
 ## Setup
 To start using gulp, first you'll need to [install node](http://nodejs.org/) and [install gulp](https://github.com/gulpjs/gulp/blob/master/docs/getting-started.md#getting-started) on your system. With these installed system-wide, you're ready to add gulp to your project.
