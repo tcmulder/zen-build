@@ -31,36 +31,36 @@ function handleError(err) {
 
 //js
 gulp.task('js', function() {
-    gulp.src('wp-content/themes/zemplate/js/src/**/*.js')
+    gulp.src('wp-content/themes/__MY_THEME_NAME__/js/src/**/*.js')
         .pipe(jshint())
         .pipe(jshint.reporter('default'))
         .pipe(uglify('scripts.min.js', {
             outSourceMap: 'src/sourcemap.map',
-            basePath: '/wp-content/themes/zemplate/js/src/'
+            basePath: '/wp-content/themes/__MY_THEME_NAME__/js/src/'
         }))
-        .pipe(gulp.dest('wp-content/themes/zemplate/js/'));
+        .pipe(gulp.dest('wp-content/themes/__MY_THEME_NAME__/js/'));
 });
 
 //css
 gulp.task('css', function() {
-    gulp.src('wp-content/themes/zemplate/sass/*.scss')
+    gulp.src('wp-content/themes/__MY_THEME_NAME__/sass/*.scss')
         .pipe(compass({
             sourcemap: true,
             quiet: true,
-            css: 'wp-content/themes/zemplate/',
-            sass: 'wp-content/themes/zemplate/sass',
-            image: 'wp-content/themes/zemplate/images',
+            css: 'wp-content/themes/__MY_THEME_NAME__/',
+            sass: 'wp-content/themes/__MY_THEME_NAME__/sass',
+            image: 'wp-content/themes/__MY_THEME_NAME__/images',
             style: 'compressed',
             require: ['sass-globbing']
         }))
         .on("error", handleError)
         .pipe(prefix('last 2 version', 'ie 10', 'ie 9'))
-        .pipe(gulp.dest('wp-content/themes/zemplate/.'));
+        .pipe(gulp.dest('wp-content/themes/__MY_THEME_NAME__/.'));
 });
 
 //webfonts
 gulp.task('icons', function(){
-    gulp.src(['wp-content/themes/zemplate/fonts/icons-raw/*.svg'])
+    gulp.src(['wp-content/themes/__MY_THEME_NAME__/fonts/icons-raw/*.svg'])
         .pipe(iconfontCss({
             path: 'icons-template.scss-template',
             fontName: 'icon',
@@ -70,25 +70,25 @@ gulp.task('icons', function(){
         .pipe(iconfont({
             fontName: 'icon'
         }))
-        .pipe(gulp.dest('wp-content/themes/zemplate/fonts/icons/'));
+        .pipe(gulp.dest('wp-content/themes/__MY_THEME_NAME__/fonts/icons/'));
 });
 
 //svg sprites
 var svg = svgSprites.svg;
 gulp.task('sprite', function () {
-    gulp.src('wp-content/themes/zemplate/images/svg-raw/*.svg')
+    gulp.src('wp-content/themes/__MY_THEME_NAME__/images/svg-raw/*.svg')
         .pipe(svg({
             defs: true,
             generatePreview: false
         }))
-        .pipe(gulp.dest("wp-content/themes/zemplate/images/svg-sprites"));
+        .pipe(gulp.dest("wp-content/themes/__MY_THEME_NAME__/images/svg-sprites"));
 });
 
 //database
 var config = {
     db: {
         local: {
-            name: 'l1_whv',
+            name: 'l1___MY_THEME_NAME__',
             user: 'root',
             pass: 'root',
             host: 'localhost',
@@ -101,7 +101,7 @@ gulp.task('db-exp', function () {
     .pipe(shell([
         'echo "database export called"',
         'test -d '+config.db.local.dumpDir+' || mkdir '+config.db.local.dumpDir+'',
-        'mysqldump -h'+config.db.local.host+' -u'+config.db.local.user+' -p\''+config.db.local.pass+'\' l1_whv > '+config.db.local.dumpDir+'db.sql',
+        'mysqldump -h'+config.db.local.host+' -u'+config.db.local.user+' -p\''+config.db.local.pass+'\' l1___MY_THEME_NAME__ > '+config.db.local.dumpDir+'db.sql',
         'ls -lah '+config.db.local.dumpDir+'db.sql | awk \'{ print "export ran: "$9" is "$5}\''
     ].join('&&')))
 });
@@ -126,13 +126,13 @@ var server = livereload();
 gulp.task('watch', function() {
 
     //run tasks when watch notices changes
-    gulp.watch('wp-content/themes/zemplate/sass/**/*.scss', ['css']);
-    gulp.watch('wp-content/themes/zemplate/js/src/**/*.js', ['js']);
-    gulp.watch('wp-content/themes/zemplate/fonts/icons-raw/*.svg', ['icons']);
-    gulp.watch('wp-content/themes/zemplate/images/svg-raw/*.svg', ['sprite']);
+    gulp.watch('wp-content/themes/__MY_THEME_NAME__/sass/**/*.scss', ['css']);
+    gulp.watch('wp-content/themes/__MY_THEME_NAME__/js/src/**/*.js', ['js']);
+    gulp.watch('wp-content/themes/__MY_THEME_NAME__/fonts/icons-raw/*.svg', ['icons']);
+    gulp.watch('wp-content/themes/__MY_THEME_NAME__/images/svg-raw/*.svg', ['sprite']);
 
     //reload the project if certain files change
-    gulp.watch('wp-content/themes/zemplate/**/*.{css,html,php,js,svg}').on('change', function(file) {
+    gulp.watch('wp-content/themes/__MY_THEME_NAME__/**/*.{css,html,php,js,svg}').on('change', function(file) {
         server.changed(file.path);
     });
 });
