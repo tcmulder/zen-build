@@ -55,7 +55,7 @@ gulp.task('css', function() {
         }))
         .on("error", handleError)
         .pipe(prefix('last 2 version', 'ie 10', 'ie 9'))
-        .pipe(gulp.dest('wp-content/themes/__MY_THEME_NAME__/.'));
+        .pipe(gulp.dest('wp-content/themes/__MY_THEME_NAME__/style.css'));
 });
 
 //webfonts
