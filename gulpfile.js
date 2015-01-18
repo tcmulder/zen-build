@@ -60,7 +60,7 @@ gulp.task('css', function() {
             require: ['sass-globbing']
         }))
         .on("error", handleError)
-        .on("error", notify.onError(function(error){return error.message;}))\
+        .on("error", notify.onError(function(error){return error.message;}))
         .pipe(livereload(server))
         .pipe(notify({ message: 'Compiled Successfully!' }))
         .pipe(prefix('last 2 version', 'ie 10', 'ie 9'))
