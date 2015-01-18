@@ -18,7 +18,9 @@ shell = require('gulp-shell'),
 notify = require('gulp-notify'),
 cache = require('gulp-cache'),
 imagemin = require('gulp-imagemin'),
-exit = require('gulp-exit');
+exit = require('gulp-exit'),
+lr = require('tiny-lr'),
+server = lr();
 
 /*------------------------------------*\
     ::Handle Errors
@@ -41,6 +43,7 @@ gulp.task('js', function() {
             outSourceMap: 'src/sourcemap.map',
             basePath: '/wp-content/themes/__MYTHEMEHERE__/js/src/'
         }))
+        .pipe(livereload(server))
         .pipe(gulp.dest('wp-content/themes/__MYTHEMEHERE__/js/'));
 });
 
@@ -57,7 +60,8 @@ gulp.task('css', function() {
             require: ['sass-globbing']
         }))
         .on("error", handleError)
-        .on("error", notify.onError(function(error){return error.message;}))
+        .on("error", notify.onError(function(error){return error.message;}))\
+        .pipe(livereload(server))
         .pipe(notify({ message: 'Compiled Successfully!' }))
         .pipe(prefix('last 2 version', 'ie 10', 'ie 9'))
         .pipe(gulp.dest('wp-content/themes/__MYTHEMEHERE__/.'));
@@ -138,21 +142,21 @@ gulp.task('db-imp', function () {
     ::Watch
 \*------------------------------------*/
 
-//establish server
-var server = livereload();
-//watch and live reload
 gulp.task('watch', function() {
 
-    //run tasks when watch notices changes
+  // Listen on port 35729
+  server.listen(35729, function (err) {
+    if (err) {
+      return console.log(err)
+    };
+
     gulp.watch('wp-content/themes/__MYTHEMEHERE__/sass/**/*.scss', ['css']);
     gulp.watch('wp-content/themes/__MYTHEMEHERE__/js/src/**/*.js', ['js']);
     gulp.watch('wp-content/themes/__MYTHEMEHERE__/fonts/icons-raw/*.svg', ['icons']);
     gulp.watch('wp-content/themes/__MYTHEMEHERE__/images/svg-raw/*.svg', ['sprite']);
 
-    //reload the project if certain files change
-    gulp.watch('wp-content/themes/__MYTHEMEHERE__/**/*.{css,html,php,js,svg}').on('change', function(file) {
-        server.changed(file.path);
-    });
+  });
+
 });
 
 /*------------------------------------*\
