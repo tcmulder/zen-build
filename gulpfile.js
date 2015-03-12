@@ -11,13 +11,10 @@ uglify = require('gulp-uglifyjs'),
 jshint = require('gulp-jshint'),
 compass = require('gulp-compass'),
 prefix = require('gulp-autoprefixer'),
-iconfont = require('gulp-iconfont'),
-iconfontCss = require('gulp-iconfont-css'),
 svgSprites = require('gulp-svg-sprites'),
 shell = require('gulp-shell'),
 notify = require('gulp-notify'),
 cache = require('gulp-cache'),
-imagemin = require('gulp-imagemin'),
 exit = require('gulp-exit'),
 lr = require('tiny-lr'),
 server = lr();
@@ -67,21 +64,6 @@ gulp.task('css', function() {
         .pipe(gulp.dest('wp-content/themes/__MYTHEMEHERE__/.'));
 });
 
-//webfonts
-gulp.task('icons', function(){
-    gulp.src(['wp-content/themes/__MYTHEMEHERE__/fonts/icons-raw/*.svg'])
-        .pipe(iconfontCss({
-            path: 'icons-template.scss-template',
-            fontName: 'icon',
-            targetPath: '../../sass/planets/base/_icons.scss',
-            fontPath: 'fonts/icons/'
-        }))
-        .pipe(iconfont({
-            fontName: 'icon'
-        }))
-        .pipe(gulp.dest('wp-content/themes/__MYTHEMEHERE__/fonts/icons/'));
-});
-
 //svg sprites
 var svg = svgSprites;
 gulp.task('sprite', function () {
@@ -91,19 +73,6 @@ gulp.task('sprite', function () {
             generatePreview: false
         }))
         .pipe(gulp.dest("wp-content/themes/__MYTHEMEHERE__/images/svg-sprites"));
-});
-
-//images (only will min images that have not been cached)
-gulp.task('img', function () {
-    return gulp.src('wp-content/themes/__MYTHEMEHERE__/images/**/*')
-        .pipe(cache(imagemin({
-            svgoPlugins: [{removeViewBox: false}],
-            optimizationLevel: 5,
-            progressive: true,
-            interlaced: true })
-        ))
-        .pipe(gulp.dest('wp-content/themes/__MYTHEMEHERE__/images/'))
-        .pipe(notify({ message: 'Images task complete' }));
 });
 
 //database

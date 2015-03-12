@@ -1,6 +1,6 @@
 {
   "name": "the-site",
-  "version": "0.0.0",
+  "version": "0.1.2",
   "description": "First gulp of gulp",
   "main": "index.js",
   "scripts": {
@@ -13,22 +13,21 @@
   "author": "@tcmulder",
   "license": "MIT",
   "devDependencies": {
-    "gulp": "*",
-    "gulp-compass": "*",
-    "gulp-livereload": "*",
-    "tiny-lr": "*",
-    "gulp-autoprefixer": "*",
-    "gulp-iconfont": "*",
-    "gulp-iconfont-css": "*",
-    "gulp-exit": "*",
-    "gulp-uglifyjs": "*",
-    "gulp-jshint": "*",
-    "install": "*",
-    "npm": "*",
-    "gulp-svg-sprites": "*",
-    "gulp-shell": "*",
-    "gulp-imagemin": "*",
-    "gulp-notify": "*",
-    "gulp-cache": "*"
+    "gulp": "^3.8.11",
+    "gulp-compass": "^2.0.3",
+    "gulp-livereload": "^3.8.0",
+    "gulp-autoprefixer": "^2.1.0",
+    "gulp-exit": "^0.0.2",
+    "gulp-uglifyjs": "^0.6.1",
+    "gulp-jshint": "^1.9.2",
+    "gulp-svg-sprites": "^2.0.1",
+    "gulp-shell": "^0.4.0",
+    "gulp-notify": "^2.2.0",
+    "gulp-cache": "^0.2.8",
+    "tiny-lr": "^0.1.5"
+  },
+  "dependencies": {
+    "install": "~0.1.8",
+    "npm": "~2.3.0"
   }
 }
