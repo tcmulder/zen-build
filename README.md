@@ -6,7 +6,7 @@ The standard gulp setup for Zenman automates common tasks when working on WordPr
 To start using gulp, first you'll need to [install node](http://nodejs.org/) and [install gulp](https://github.com/gulpjs/gulp/blob/master/docs/getting-started.md#getting-started) on your system. With these installed system-wide, you're ready to add gulp to your project.
 
 1. Download this repository and add the ``gulpfile.js``, ``icons-template.scss-template``, and ``package.json`` files to the root of your project.
-2. Run the command ``npm update --save-dev`` in the root of your project to install the necessary modules.
+2. Run the command ``npm install`` in the root of your project to install the necessary modules.
 3. Open the ``gulpfile.js`` file and modify the values to match those of your project.
 
 **Note:** *if it's not already present you'll also want to make sure you add the  ``node_modules`` directory to your ``.gitignore`` file and commit that change before any other commits.*
