@@ -15,9 +15,7 @@ svgSprites = require('gulp-svg-sprites'),
 shell = require('gulp-shell'),
 notify = require('gulp-notify'),
 cache = require('gulp-cache'),
-exit = require('gulp-exit'),
-lr = require('tiny-lr'),
-server = lr();
+exit = require('gulp-exit');
 
 /*------------------------------------*\
     ::Handle Errors
@@ -40,7 +38,7 @@ gulp.task('js', function() {
             outSourceMap: 'src/sourcemap.map',
             basePath: '/wp-content/themes/__MYTHEMEHERE__/js/src/'
         }))
-        .pipe(livereload(server))
+        .pipe(livereload())
         .pipe(gulp.dest('wp-content/themes/__MYTHEMEHERE__/js/'));
 });
 
@@ -56,9 +54,9 @@ gulp.task('css', function() {
             style: 'compressed',
             require: ['sass-globbing']
         }))
+        .pipe(livereload())
         .on("error", handleError)
         .on("error", notify.onError(function(error){return error.message;}))
-        .pipe(livereload(server))
         .pipe(notify({ message: 'Compiled Successfully!' }))
         .pipe(prefix('last 2 version', 'ie 10', 'ie 9'))
         .pipe(gulp.dest('wp-content/themes/__MYTHEMEHERE__/.'));
@@ -72,6 +70,7 @@ gulp.task('sprite', function () {
             defs: true,
             generatePreview: false
         }))
+        .pipe(livereload())
         .pipe(gulp.dest("wp-content/themes/__MYTHEMEHERE__/images/svg-sprites"));
 });
 
@@ -111,24 +110,21 @@ gulp.task('db-imp', function () {
     ::Watch
 \*------------------------------------*/
 
+//establish server
+livereload.listen();
+
+//watch and live reload
 gulp.task('watch', function() {
-
-  // Listen on port 35729
-  server.listen(35729, function (err) {
-    if (err) {
-      return console.log(err)
-    };
-
+    //reload the project if certain files change
     gulp.watch('wp-content/themes/__MYTHEMEHERE__/sass/**/*.scss', ['css']);
     gulp.watch('wp-content/themes/__MYTHEMEHERE__/js/src/**/*.js', ['js']);
     gulp.watch('wp-content/themes/__MYTHEMEHERE__/fonts/icons-raw/*.svg', ['icons']);
     gulp.watch('wp-content/themes/__MYTHEMEHERE__/images/svg-raw/*.svg', ['sprite']);
-
-  });
-
 });
 
 /*------------------------------------*\
     ::Task Combinations
 \*------------------------------------*/
-gulp.task('default', ['watch']);
+gulp.task('default', ['watch'], function(){
+    gulp.src('wp-content/themes/__MYTHEMEHERE__/**/*.{css,html,php,js,svg}').on('change', livereload.changed);
+});
