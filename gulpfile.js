@@ -120,11 +120,14 @@ gulp.task('watch', function() {
     gulp.watch('wp-content/themes/__MYTHEMEHERE__/js/src/**/*.js', ['js']);
     gulp.watch('wp-content/themes/__MYTHEMEHERE__/fonts/icons-raw/*.svg', ['icons']);
     gulp.watch('wp-content/themes/__MYTHEMEHERE__/images/svg-raw/*.svg', ['sprite']);
+    gulp.watch('wp-content/themes/__MYTHEMEHERE__/**/*.{php,html}').on('change', function(file){
+        livereload.changed(file.path);
+    })
 });
 
 /*------------------------------------*\
     ::Task Combinations
 \*------------------------------------*/
 gulp.task('default', ['watch'], function(){
-    gulp.src('wp-content/themes/__MYTHEMEHERE__/**/*.{css,html,php,js,svg}').on('change', livereload.changed);
+    gulp.src('wp-content/themes/__MYTHEMEHERE__/**/*.{css,js,svg}').on('change', livereload.changed);
 });
