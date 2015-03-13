@@ -5,17 +5,18 @@
 /*------------------------------------*\
     ::Plugins
 \*------------------------------------*/
-var gulp = require('gulp'),
-livereload = require('gulp-livereload'),
-uglify = require('gulp-uglifyjs'),
-jshint = require('gulp-jshint'),
-compass = require('gulp-compass'),
-prefix = require('gulp-autoprefixer'),
-svgSprites = require('gulp-svg-sprites'),
-shell = require('gulp-shell'),
-notify = require('gulp-notify'),
-cache = require('gulp-cache'),
-exit = require('gulp-exit');
+var gulp    = require('gulp'),
+browserSync = require('browser-sync'),
+uglify      = require('gulp-uglifyjs'),
+jshint      = require('gulp-jshint'),
+compass     = require('gulp-compass'),
+prefix      = require('gulp-autoprefixer'),
+svgSprites  = require('gulp-svg-sprites'),
+shell       = require('gulp-shell'),
+notify      = require('gulp-notify'),
+cache       = require('gulp-cache'),
+exit        = require('gulp-exit'),
+reload      = browserSync.reload;
 
 /*------------------------------------*\
     ::Handle Errors
@@ -38,7 +39,6 @@ gulp.task('js', function() {
             outSourceMap: 'src/sourcemap.map',
             basePath: '/wp-content/themes/__MYTHEMEHERE__/js/src/'
         }))
-        .pipe(livereload())
         .pipe(gulp.dest('wp-content/themes/__MYTHEMEHERE__/js/'));
 });
 
@@ -54,7 +54,7 @@ gulp.task('css', function() {
             style: 'compressed',
             require: ['sass-globbing']
         }))
-        .pipe(livereload())
+        .pipe(browserSync.reload({stream:true}))
         .on("error", handleError)
         .on("error", notify.onError(function(error){return error.message;}))
         .pipe(notify({ message: 'Compiled Successfully!' }))
@@ -70,7 +70,6 @@ gulp.task('sprite', function () {
             defs: true,
             generatePreview: false
         }))
-        .pipe(livereload())
         .pipe(gulp.dest("wp-content/themes/__MYTHEMEHERE__/images/svg-sprites"));
 });
 
@@ -109,25 +108,23 @@ gulp.task('db-imp', function () {
 /*------------------------------------*\
     ::Watch
 \*------------------------------------*/
-
-//establish server
-livereload.listen();
-
-//watch and live reload
+//browsersync
+// Static Server + watching scss/html files
 gulp.task('watch', function() {
-    //reload the project if certain files change
+
+    browserSync({
+        //eg http://10.0.1.254:8888/sites/zenman/zenman
+        proxy: "__YOUR_IP_AND_PATH_TO_SITE_HERE"
+    });
+
     gulp.watch('wp-content/themes/__MYTHEMEHERE__/sass/**/*.scss', ['css']);
-    gulp.watch('wp-content/themes/__MYTHEMEHERE__/js/src/**/*.js', ['js']);
-    gulp.watch('wp-content/themes/__MYTHEMEHERE__/fonts/icons-raw/*.svg', ['icons']);
-    gulp.watch('wp-content/themes/__MYTHEMEHERE__/images/svg-raw/*.svg', ['sprite']);
-    gulp.watch('wp-content/themes/__MYTHEMEHERE__/**/*.{php,html}').on('change', function(file){
-        livereload.changed(file.path);
-    })
+    gulp.watch('wp-content/themes/__MYTHEMEHERE__/js/src/**/*.js', ['js', reload]);
+    gulp.watch('wp-content/themes/__MYTHEMEHERE__/fonts/icons-raw/*.svg', ['icons', reload]);
+    gulp.watch('wp-content/themes/__MYTHEMEHERE__/images/svg-raw/*.svg', ['sprite', reload]);
+    gulp.watch("wp-content/themes/__MYTHEMEHERE__/**/*.{php,html}").on('change', reload);
 });
 
 /*------------------------------------*\
     ::Task Combinations
 \*------------------------------------*/
-gulp.task('default', ['watch'], function(){
-    gulp.src('wp-content/themes/__MYTHEMEHERE__/**/*.{css,js,svg}').on('change', livereload.changed);
-});
+gulp.task('default', ['watch']);
