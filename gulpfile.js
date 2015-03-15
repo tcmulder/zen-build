@@ -54,11 +54,11 @@ gulp.task('css', function() {
             style: 'compressed',
             require: ['sass-globbing']
         }))
-        .pipe(browserSync.reload({stream:true}))
         .on("error", handleError)
         .on("error", notify.onError(function(error){return error.message;}))
         .pipe(notify({ message: 'Compiled Successfully!' }))
         .pipe(prefix('last 2 version', 'ie 10', 'ie 9'))
+        .pipe(browserSync.reload({stream:true}))
         .pipe(gulp.dest('wp-content/themes/__MYTHEMEHERE__/.'));
 });
 
@@ -90,7 +90,7 @@ gulp.task('db-exp', function () {
     .pipe(shell([
         'echo "database export called"',
         'test -d '+config.db.local.dumpDir+' || mkdir '+config.db.local.dumpDir+'',
-        'mysqldump -h'+config.db.local.host+' -u'+config.db.local.user+' -p\''+config.db.local.pass+'\' l1_whv > '+config.db.local.dumpDir+'db.sql',
+        'mysqldump -h'+config.db.local.host+' -u'+config.db.local.user+' -p\''+config.db.local.pass+'\' l1_00000000000000 > '+config.db.local.dumpDir+'db.sql',
         'ls -lah '+config.db.local.dumpDir+'db.sql | awk \'{ print "export ran: "$9" is "$5}\''
     ].join('&&')))
 });
@@ -114,7 +114,8 @@ gulp.task('watch', function() {
 
     browserSync({
         //eg http://10.0.1.254:8888/sites/zenman/zenman
-        proxy: "__YOUR_IP_AND_PATH_TO_SITE_HERE"
+        proxy: "__YOUR_IP_AND_PATH_TO_SITE_HERE",
+        open: false
     });
 
     gulp.watch('wp-content/themes/__MYTHEMEHERE__/sass/**/*.scss', ['css']);
