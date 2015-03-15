@@ -108,6 +108,7 @@ gulp.task('db-imp', function () {
 /*------------------------------------*\
     ::Watch
 \*------------------------------------*/
+
 //browsersync
 // Static Server + watching scss/html files
 gulp.task('watch', function() {
