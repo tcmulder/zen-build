@@ -13,17 +13,18 @@
   "author": "@tcmulder",
   "license": "MIT",
   "devDependencies": {
-    "gulp": "^3.8.11",
     "browser-sync": "~2.2.4",
-    "gulp-compass": "^2.0.3",
+    "gulp": "^3.8.11",
     "gulp-autoprefixer": "^2.1.0",
+    "gulp-cache": "^0.2.8",
+    "gulp-compass": "^2.0.3",
     "gulp-exit": "^0.0.2",
-    "gulp-uglifyjs": "^0.6.1",
     "gulp-jshint": "^1.9.2",
-    "gulp-svg-sprites": "^2.0.1",
-    "gulp-shell": "^0.4.0",
     "gulp-notify": "^2.2.0",
-    "gulp-cache": "^0.2.8"
+    "gulp-shell": "^0.4.0",
+    "gulp-svg-sprite": "^1.0.19",
+    "gulp-uglifyjs": "^0.6.1",
+    "vinyl": "^0.4.6"
   },
   "dependencies": {
     "install": "~0.1.8",
