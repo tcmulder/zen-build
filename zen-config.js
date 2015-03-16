@@ -6,7 +6,7 @@ module.exports = {
         proj:   'TEMPLATENAME'
     },
     sass: {
-        src:    './wp-content/themes/PROJECTNAME/sass/*.scss',
+        src:    './wp-content/themes/PROJECTNAME/sass/',
         dest:   './wp-content/themes/PROJECTNAME/'
     },
     js: {
@@ -23,10 +23,15 @@ module.exports = {
         ]
     },
     db: {
-        name:   './',
-        user:   './',
-        pass:   '...'
-    }//,
+        local: {
+            name: 'l1_TEMPLATENAME',
+            user: 'root',
+            pass: 'root',
+            host: 'localhost',
+            dumpDir: '.db/'
+        }
+    }
+    //,
     // this gulpfile already handles from/to,
     // otherwise you'd put those here. If you
     // do add strings here, they will overwrite

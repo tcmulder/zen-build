@@ -5,18 +5,23 @@
 /*------------------------------------*\
     ::Plugins
 \*------------------------------------*/
-var gulp    = require('gulp'),
-browserSync = require('browser-sync'),
-uglify      = require('gulp-uglifyjs'),
-jshint      = require('gulp-jshint'),
-compass     = require('gulp-compass'),
-prefix      = require('gulp-autoprefixer'),
-svgSprites  = require('gulp-svg-sprites'),
-shell       = require('gulp-shell'),
-notify      = require('gulp-notify'),
-cache       = require('gulp-cache'),
-exit        = require('gulp-exit'),
-reload      = browserSync.reload;
+var gulp        = require('gulp');
+var browserSync = require('browser-sync');
+var uglify      = require('gulp-uglifyjs');
+var jshint      = require('gulp-jshint');
+var compass     = require('gulp-compass');
+var prefix      = require('gulp-autoprefixer');
+var svgSprite  = require('gulp-svg-sprite');
+var shell       = require('gulp-shell');
+var notify      = require('gulp-notify');
+var cache       = require('gulp-cache');
+var exit        = require('gulp-exit');
+var reload      = browserSync.reload;
+
+/*------------------------------------*\
+    ::Configuration
+\*------------------------------------*/
+var config = require('./zen-config.js');
 
 /*------------------------------------*\
     ::Handle Errors
@@ -30,27 +35,15 @@ function handleError(err) {
     ::Task Definitions
 \*------------------------------------*/
 
-//js
-gulp.task('js', function() {
-    gulp.src('wp-content/themes/__MYTHEMEHERE__/js/src/**/*.js')
-        .pipe(jshint())
-        .pipe(jshint.reporter('default'))
-        .pipe(uglify('scripts.min.js', {
-            outSourceMap: 'src/sourcemap.map',
-            basePath: '/wp-content/themes/__MYTHEMEHERE__/js/src/'
-        }))
-        .pipe(gulp.dest('wp-content/themes/__MYTHEMEHERE__/js/'));
-});
-
 //css
 gulp.task('css', function() {
-    gulp.src('wp-content/themes/__MYTHEMEHERE__/sass/*.scss')
+    gulp.src(config.sass.src+'*.scss')
         .pipe(compass({
             sourcemap: true,
             quiet: true,
-            css: 'wp-content/themes/__MYTHEMEHERE__/',
-            sass: 'wp-content/themes/__MYTHEMEHERE__/sass',
-            image: 'wp-content/themes/__MYTHEMEHERE__/images',
+            css: config.sass.dest,
+            sass: config.sass.src,
+            image: config.sass.src+'images',
             style: 'compressed',
             require: ['sass-globbing']
         }))
@@ -59,51 +52,63 @@ gulp.task('css', function() {
         .on("error", notify.onError(function(error){return error.message;}))
         .pipe(notify({ message: 'Compiled Successfully!' }))
         .pipe(prefix('last 2 version', 'ie 10', 'ie 9'))
-        .pipe(gulp.dest('wp-content/themes/__MYTHEMEHERE__/.'));
+        .pipe(gulp.dest(config.sass.dest));
 });
 
-//svg sprites
-var svg = svgSprites;
-gulp.task('sprite', function () {
-    gulp.src('wp-content/themes/__MYTHEMEHERE__/images/svg-raw/*.svg')
-        .pipe(svg({
-            defs: true,
-            generatePreview: false
+//js
+gulp.task('js', function() {
+    gulp.src('wp-content/themes/PROJECTNAME/js/src/**/*.js')
+        .pipe(jshint())
+        .pipe(jshint.reporter('default'))
+        .pipe(uglify('scripts.min.js', {
+            outSourceMap: 'src/sourcemap.map',
+            basePath: '/wp-content/themes/PROJECTNAME/js/src/'
         }))
-        .pipe(gulp.dest("wp-content/themes/__MYTHEMEHERE__/images/svg-sprites"));
+        .pipe(gulp.dest('wp-content/themes/PROJECTNAME/js/'));
 });
+
+// //svg sprites
+// var svg = svgSprite;
+// gulp.task('sprite', function () {
+//     gulp.src('wp-content/themes/PROJECTNAME/images/svg-raw/*.svg')
+//         .pipe(svg({
+//             defs: true,
+//             generatePreview: false
+//         }))
+//         .pipe(gulp.dest("wp-content/themes/PROJECTNAME/images/svg-sprites"));
+// });
 
 //database
-var config = {
-    db: {
-        local: {
-            name: 'l1_00000000000000',
-            user: 'root',
-            pass: 'root',
-            host: 'localhost',
-            dumpDir: '.db/'
-        }
-    }
-};
-gulp.task('db-exp', function () {
-  return gulp.src('*.js', {read: false})
-    .pipe(shell([
-        'echo "database export called"',
-        'test -d '+config.db.local.dumpDir+' || mkdir '+config.db.local.dumpDir+'',
-        'mysqldump -h'+config.db.local.host+' -u'+config.db.local.user+' -p\''+config.db.local.pass+'\' l1_whv > '+config.db.local.dumpDir+'db.sql',
-        'ls -lah '+config.db.local.dumpDir+'db.sql | awk \'{ print "export ran: "$9" is "$5}\''
-    ].join('&&')))
-});
-gulp.task('db-imp', function () {
-  return gulp.src('*.js', {read: false})
-    .pipe(shell([
-        'echo "database import called"',
-        'mysqldump -h'+config.db.local.host+' -u'+config.db.local.user+' -p\''+config.db.local.pass+'\' --no-data '+config.db.local.name+' | grep ^DROP | mysql -h'+config.db.local.host+' -u'+config.db.local.user+' -p\''+config.db.local.pass+'\' '+config.db.local.name+'',
-        'mysql -h'+config.db.local.host+' -u'+config.db.local.user+' -p'+config.db.local.pass+' '+config.db.local.name+' < '+config.db.local.dumpDir+'db.sql',
-        'echo "import ran:"',
-        'mysql -h'+config.db.local.host+' -u'+config.db.local.user+' -p'+config.db.local.pass+' '+config.db.local.name+' -e \'SHOW TABLES\''
-    ].join('&&')))
-});
+// var config = {
+//     db: {
+//         local: {
+//             name: 'l1_00000000000000',
+//             user: 'root',
+//             pass: 'root',
+//             host: 'localhost',
+//             dumpDir: '.db/'
+//         }
+//     }
+// };
+// gulp.task('db-exp', function () {
+//   return gulp.src('*.js', {read: false})
+//     .pipe(shell([
+//         'echo "database export called"',
+//         'test -d '+config.db.local.dumpDir+' || mkdir '+config.db.local.dumpDir+'',
+//         'mysqldump -h'+config.db.local.host+' -u'+config.db.local.user+' -p\''+config.db.local.pass+'\' l1_whv > '+config.db.local.dumpDir+'db.sql',
+//         'ls -lah '+config.db.local.dumpDir+'db.sql | awk \'{ print "export ran: "$9" is "$5}\''
+//     ].join('&&')))
+// });
+// gulp.task('db-imp', function () {
+//   return gulp.src('*.js', {read: false})
+//     .pipe(shell([
+//         'echo "database import called"',
+//         'mysqldump -h'+config.db.local.host+' -u'+config.db.local.user+' -p\''+config.db.local.pass+'\' --no-data '+config.db.local.name+' | grep ^DROP | mysql -h'+config.db.local.host+' -u'+config.db.local.user+' -p\''+config.db.local.pass+'\' '+config.db.local.name+'',
+//         'mysql -h'+config.db.local.host+' -u'+config.db.local.user+' -p'+config.db.local.pass+' '+config.db.local.name+' < '+config.db.local.dumpDir+'db.sql',
+//         'echo "import ran:"',
+//         'mysql -h'+config.db.local.host+' -u'+config.db.local.user+' -p'+config.db.local.pass+' '+config.db.local.name+' -e \'SHOW TABLES\''
+//     ].join('&&')))
+// });
 
 /*------------------------------------*\
     ::Watch
@@ -113,15 +118,14 @@ gulp.task('db-imp', function () {
 gulp.task('watch', function() {
 
     browserSync({
-        //eg http://10.0.1.254:8888/sites/zenman/zenman
-        proxy: "__YOUR_IP_AND_PATH_TO_SITE_HERE"
+        proxy: "http://localhost:8888/sites/zen-build/PROJECTNAME"
     });
 
-    gulp.watch('wp-content/themes/__MYTHEMEHERE__/sass/**/*.scss', ['css']);
-    gulp.watch('wp-content/themes/__MYTHEMEHERE__/js/src/**/*.js', ['js', reload]);
-    gulp.watch('wp-content/themes/__MYTHEMEHERE__/fonts/icons-raw/*.svg', ['icons', reload]);
-    gulp.watch('wp-content/themes/__MYTHEMEHERE__/images/svg-raw/*.svg', ['sprite', reload]);
-    gulp.watch("wp-content/themes/__MYTHEMEHERE__/**/*.{php,html}").on('change', reload);
+    gulp.watch('wp-content/themes/PROJECTNAME/sass/**/*.scss', ['css']);
+    // gulp.watch('wp-content/themes/PROJECTNAME/js/src/**/*.js', ['js', reload]);
+    // gulp.watch('wp-content/themes/PROJECTNAME/fonts/icons-raw/*.svg', ['icons', reload]);
+    // gulp.watch('wp-content/themes/PROJECTNAME/images/svg-raw/*.svg', ['sprite', reload]);
+    gulp.watch("wp-content/themes/PROJECTNAME/**/*.{php,html}").on('change', reload);
 });
 
 /*------------------------------------*\
