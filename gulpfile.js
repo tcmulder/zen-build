@@ -11,7 +11,7 @@ uglify      = require('gulp-uglifyjs'),
 jshint      = require('gulp-jshint'),
 compass     = require('gulp-compass'),
 prefix      = require('gulp-autoprefixer'),
-svgSprites  = require('gulp-svg-sprites'),
+svgSprites  = require('gulp-svg-sprite'),
 shell       = require('gulp-shell'),
 notify      = require('gulp-notify'),
 cache       = require('gulp-cache'),
@@ -66,9 +66,14 @@ gulp.task('css', function() {
 var svg = svgSprites;
 gulp.task('sprite', function () {
     gulp.src('wp-content/themes/__MYTHEMEHERE__/images/svg-raw/*.svg')
-        .pipe(svg({
-            defs: true,
-            generatePreview: false
+        pipe(svg({
+            mode: {
+                inline: true,
+                symbol: true
+            },
+            svg: {
+                xmlDeclaration : false
+            }
         }))
         .pipe(gulp.dest("wp-content/themes/__MYTHEMEHERE__/images/svg-sprites"));
 });
