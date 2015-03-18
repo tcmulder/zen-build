@@ -24,11 +24,37 @@ var reload      = browserSync.reload;
 var config = require('./zen-config.js');
 
 /*------------------------------------*\
-    ::Handle Errors
+    ::Common Functions
 \*------------------------------------*/
+// errors
 function handleError(err) {
   console.log(err.toString());
   this.emit('end');
+}
+
+// find directories
+function findDirs(startDir){
+    var fs = require('fs');
+    var path = require('path');
+    return fs
+                .readdirSync(startDir)
+                .filter(function(file) {
+                    return fs
+                        .statSync(path.join(startDir, file))
+                        .isDirectory();
+                });
+
+}
+
+// array search
+function searchArr (str, strArray) {
+    var indexOfString = [];
+    for (var i=0; i<strArray.length; i++) {
+        if (strArray[i].match(str)){
+            indexOfString.push(i);
+        }
+    }
+    return indexOfString;
 }
 
 /*------------------------------------*\
@@ -43,7 +69,7 @@ gulp.task('css', function() {
             quiet: true,
             css: config.sass.dest,
             sass: config.sass.src,
-            image: config.sass.src+'images',
+            image: config.sass.src+'../images',
             style: 'compressed',
             require: ['sass-globbing']
         }))
@@ -57,23 +83,64 @@ gulp.task('css', function() {
 
 //js
 gulp.task('js', function() {
-    gulp.src('wp-content/themes/PROJECTNAME/js/src/**/*.js')
-        .pipe(jshint())
-        .pipe(jshint.reporter('default'))
-        .pipe(uglify('scripts.min.js', {
-            outSourceMap: 'src/sourcemap.map',
-            basePath: '/wp-content/themes/PROJECTNAME/js/src/'
-        }))
-        .pipe(gulp.dest('wp-content/themes/PROJECTNAME/js/'));
+
+    // get array of directories
+    var dirs = findDirs(config.js.src);
+
+    // search array for src directories
+    var srcDirs = searchArr('src', dirs);
+
+    // for each directory
+    for (var i=0; i < srcDirs.length; i++) {
+        console.log(dirs[srcDirs[i]]);
+    }
+
+
+    // var fs = require('fs');
+    // var getDirs = function(rootDir, cb) {
+    //     fs.readdir(rootDir, function(err, files) {
+    //         var dirs = [];
+    //         for (index = 0, index < files.length; ++index;) {
+    //             file = files[index];
+    //             if (file[0] !== '.') {
+    //                 filePath = rootDir + '/' + file;
+    //                 fs.stat(filePath, function(err, stat) {
+    //                     if (stat.isDirectory()) {
+    //                         dirs.push(file);
+    //                     }
+    //                     if (files.length === (index + 1)) {
+    //                         return cb(dirs);
+    //                     }
+    //                 });
+    //             }
+    //         }
+    //     });
+    // };
+    // getDirs('./wp-content');
+    // console.log(getDirs('./wp-content'));
+
+    // gulp.src('wp-content/themes/PROJECTNAME/js/src/**/*.js')
+    //     .pipe(jshint())
+    //     .pipe(jshint.reporter('default'))
+    //     .pipe(uglify('scripts.min.js', {
+    //         outSourceMap: 'src/sourcemap.map',
+    //         basePath: '/wp-content/themes/PROJECTNAME/js/src/'
+    //     }))
+    //     .pipe(gulp.dest('wp-content/themes/PROJECTNAME/js/'));
 });
 
 // //svg sprites
-// var svg = svgSprite;
+// var svg = svgSprites;
 // gulp.task('sprite', function () {
 //     gulp.src('wp-content/themes/PROJECTNAME/images/svg-raw/*.svg')
-//         .pipe(svg({
-//             defs: true,
-//             generatePreview: false
+//         pipe(svg({
+//             mode: {
+//                 inline: true,
+//                 symbol: true
+//             },
+//             svg: {
+//                 xmlDeclaration : false
+//             }
 //         }))
 //         .pipe(gulp.dest("wp-content/themes/PROJECTNAME/images/svg-sprites"));
 // });
@@ -118,11 +185,12 @@ gulp.task('js', function() {
 gulp.task('watch', function() {
 
     browserSync({
-        proxy: "http://localhost:8888/sites/zen-build/PROJECTNAME"
+        proxy: 'http://localhost:8888/sites/'+config.site.client+'/'+config.site.proj,
+        open: false
     });
 
     gulp.watch('wp-content/themes/PROJECTNAME/sass/**/*.scss', ['css']);
-    // gulp.watch('wp-content/themes/PROJECTNAME/js/src/**/*.js', ['js', reload]);
+    gulp.watch('wp-content/themes/PROJECTNAME/js/**/*.js', ['js']);
     // gulp.watch('wp-content/themes/PROJECTNAME/fonts/icons-raw/*.svg', ['icons', reload]);
     // gulp.watch('wp-content/themes/PROJECTNAME/images/svg-raw/*.svg', ['sprite', reload]);
     gulp.watch("wp-content/themes/PROJECTNAME/**/*.{php,html}").on('change', reload);

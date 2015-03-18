@@ -3,28 +3,28 @@ module.exports = {
     // explain what this one is...
     site: {
         client: 'zen-build',
-        proj:   'TEMPLATENAME'
+        proj:   'PROJECTNAME'
     },
     sass: {
         src:    './wp-content/themes/PROJECTNAME/sass/',
         dest:   './wp-content/themes/PROJECTNAME/'
     },
     js: {
-        src:    './wp-content/themes/TEMPLATENAME/js/',
-        dest:   './wp-content/themes/TEMPLATENAME/js/'
+        src:    './wp-content/themes/PROJECTNAME/js/',
+        dest:   './wp-content/themes/PROJECTNAME/js/'
     },
     svg: {
-        src:    './wp-content/themes/TEMPLATENAME/images/svg/',
-        dest:   './wp-content/themes/TEMPLATENAME/images/svg/'
+        src:    './wp-content/themes/PROJECTNAME/images/svg/',
+        dest:   './wp-content/themes/PROJECTNAME/images/svg/'
     },
     watch: {
         src: [
-            './wp-content/themes/TEMPLATENAME/**/*.{php,html,js,css}'
+            './wp-content/themes/PROJECTNAME/**/*.{php,html,js,css}'
         ]
     },
     db: {
         local: {
-            name: 'l1_TEMPLATENAME',
+            name: 'l1_PROJECTNAME',
             user: 'root',
             pass: 'root',
             host: 'localhost',
