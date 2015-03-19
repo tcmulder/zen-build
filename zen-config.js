@@ -10,8 +10,14 @@ module.exports = {
         dest:   './wp-content/themes/PROJECTNAME/'
     },
     js: {
-        src:    './wp-content/themes/PROJECTNAME/js/',
-        dest:   './wp-content/themes/PROJECTNAME/js/'
+        src:    [
+            './wp-content/themes/PROJECTNAME/js/map-src/**/*.js',
+            './wp-content/themes/PROJECTNAME/js/scripts-src/**/*.js'
+        ],
+        dest:    [
+            './wp-content/themes/PROJECTNAME/js/map.min.js',
+            './wp-content/themes/PROJECTNAME/js/scripts.min.js'
+        ]
     },
     svg: {
         src:    './wp-content/themes/PROJECTNAME/images/svg/',
