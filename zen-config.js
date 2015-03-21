@@ -2,11 +2,11 @@
 module.exports = {
     // explain what this one is...
     site: {
-        client: 'zen-build',
+        client: 'CLIENTNAME',
         proj:   'PROJECTNAME'
     },
     url: {
-        root: 'http://localhost:8888/sites/zen-build/PROJECTNAME'
+        root: 'http://localhost:8888/sites/CLIENTNAME/PROJECTNAME'
     },
     sass: {
         src:    './wp-content/themes/PROJECTNAME/sass/',
