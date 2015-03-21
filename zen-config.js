@@ -5,6 +5,9 @@ module.exports = {
         client: 'zen-build',
         proj:   'PROJECTNAME'
     },
+    url: {
+        root: 'http://localhost:8888/sites/zen-build/PROJECTNAME'
+    },
     sass: {
         src:    './wp-content/themes/PROJECTNAME/sass/',
         dest:   './wp-content/themes/PROJECTNAME/'

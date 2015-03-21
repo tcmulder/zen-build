@@ -8,7 +8,7 @@
 var gulp        = require('gulp');
 var browserSync = require('browser-sync');
 var uglify      = require('gulp-uglifyjs');
-// var jshint      = require('gulp-jshint');
+var jshint      = require('gulp-jshint');
 var compass     = require('gulp-compass');
 var prefix      = require('gulp-autoprefixer');
 // var svgSprite  = require('gulp-svg-sprite');
@@ -73,24 +73,60 @@ function handleError(err) {
 \*------------------------------------*/
 
 //css
-// gulp.task('css', function() {
-//     gulp.src(config.sass.src+'*.scss')
-//         .pipe(compass({
-//             sourcemap: true,
-//             quiet: true,
-//             css: config.sass.dest,
-//             sass: config.sass.src,
-//             image: config.sass.src+'../images',
-//             style: 'compressed',
-//             require: ['sass-globbing']
-//         }))
-//         .pipe(browserSync.reload({stream:true}))
-//         .on("error", handleError)
-//         .on("error", notify.onError(function(error){return error.message;}))
-//         .pipe(notify({ message: 'Compiled Successfully!' }))
-//         .pipe(prefix('last 2 version', 'ie 10', 'ie 9'))
-//         .pipe(gulp.dest(config.sass.dest));
-// });
+gulp.task('css', function() {
+    gulp.src(config.sass.src+'*.scss')
+        .pipe(compass({
+            sourcemap: true,
+            quiet: true,
+            css: config.sass.dest,
+            sass: config.sass.src,
+            image: config.sass.src+'../images',
+            style: 'compressed',
+            require: ['sass-globbing']
+        }))
+        .pipe(browserSync.reload({stream:true}))
+        .on("error", handleError)
+        .on("error", notify.onError(function(error){return error.message;}))
+        .pipe(notify({ message: 'Compiled Successfully!' }))
+        .pipe(prefix('last 2 version', 'ie 10', 'ie 9'))
+        .pipe(gulp.dest(config.sass.dest));
+});
+
+
+
+
+
+
+
+for(var i=0; i < config.js.src.length; i++){
+
+    gulp.task('js-'+i, function() {
+        var i = this.seq[0].split('-')[1];
+        var destParts = config.js.dest[i].split('/');
+        var destFile = destParts.pop();
+        var destPath = destParts.join('/') + '/';
+        console.log(destParts);
+        console.log(destFile);
+        console.log(destPath);
+        gulp.src(config.js.src[i])
+            .pipe(jshint())
+            .pipe(jshint.reporter('default'))
+            .pipe(uglify(destFile, {
+                sourceRoot: config.url.root,
+                outSourceMap: true
+            }))
+            .pipe(gulp.dest(destPath))
+            .pipe(browserSync.reload({stream:true}));
+
+    });
+}
+
+
+
+
+
+
+
 
 //js
 // var whatever = 0;
@@ -108,16 +144,30 @@ function handleError(err) {
 // });
 
 
-gulp.task('js', function() {
-    gulp.src('./wp-content/themes/PROJECTNAME/js/map-src/**/*.js')
-        // .pipe(jshint())
-        // .pipe(jshint.reporter('default'))
-        .pipe(uglify('scripts.min.js', {
-            outSourceMap: 'src/sourcemap.map',
-            basePath: '/wp-content/themes/PROJECTNAME/js/src/'
-        }))
-        .pipe(gulp.dest('wp-content/themes/PROJECTNAME/js/'));
-});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// gulp.task('js', function() {
+//     gulp.src('./wp-content/themes/PROJECTNAME/js/map-src/**/*.js')
+//         // .pipe(jshint())
+//         // .pipe(jshint.reporter('default'))
+//         .pipe(uglify('scripts.min.js', {
+//             outSourceMap: 'src/sourcemap.map',
+//             basePath: '/wp-content/themes/PROJECTNAME/js/src/'
+//         }))
+//         .pipe(gulp.dest('wp-content/themes/PROJECTNAME/js/'));
+// });
 
 // //svg sprites
 // var svg = svgSprites;
@@ -181,29 +231,42 @@ gulp.task('watch', function() {
 
     gulp.watch('wp-content/themes/PROJECTNAME/sass/**/*.scss', ['css']);
 
+
     for(var i=0; i < config.js.src.length; i++){
-        // gulp.watch(config.js.src[i], ['js']);
-        // gulp.watch('./wp-content/themes/PROJECTNAME/js/map-src/**/*.js', ['js']);
-        var justSetMeOnce = config.js.src[i];
-        gulp.watch(config.js.src[i], function(vars){
-            console.log(vars.path);
-            // console.log(justSetMeOnce);
-        });
-        // console.log('script: '+config.js.src[i]);
-        // var scriptSrc = config.js.src[i];
-        // gulp.watch('./wp-content/themes/PROJECTNAME/js/map-src/**/*.js', function () {
-        //     console.log(scriptSrc);
-        //     gulp.src('./wp-content/themes/PROJECTNAME/js/map-src/**/*.js')
-        //             // .pipe(jshint())
-        //             // .pipe(jshint.reporter('default'))
-        //             .pipe(uglify('map.min.js', {
-        //                 outSourceMap: 'map-src/sourcemap.map',
-        //                 basePath: '/wp-content/themes/PROJECTNAME/js/map-src/'
-        //             }))
-        //             .pipe(gulp.dest('./wp-content/themes/PROJECTNAME/js/'));
+        gulp.watch(config.js.src[i], ['js-'+i]);
+    }
+        // var watchFile = config.js.src[i];
+        // console.log('first ' + watchFile);
+
+
+        // gulp.task('js'+i, function() {
+        //     console.log(watchFile);
+        //     gulp.watch(watchFile, ['js'+i]);
         // });
 
-    }
+    // for(var i=0; i < config.js.src.length; i++){
+    //     // gulp.watch(config.js.src[i], ['js']);
+    //     // gulp.watch('./wp-content/themes/PROJECTNAME/js/map-src/**/*.js', ['js']);
+    //     // var justSetMeOnce = config.js.src[i];
+    //     // gulp.watch(config.js.src[i], function(vars){
+    //     //     console.log(vars.path);
+    //     //     // console.log(justSetMeOnce);
+    //     // });
+    //     console.log('script: '+config.js.src[i]);
+    //     // var scriptSrc = config.js.src[i];
+    //     // gulp.watch('./wp-content/themes/PROJECTNAME/js/map-src/**/*.js', function () {
+    //     //     console.log(scriptSrc);
+    //     //     gulp.src('./wp-content/themes/PROJECTNAME/js/map-src/**/*.js')
+    //     //             // .pipe(jshint())
+    //     //             // .pipe(jshint.reporter('default'))
+    //     //             .pipe(uglify('map.min.js', {
+    //     //                 outSourceMap: 'map-src/sourcemap.map',
+    //     //                 basePath: '/wp-content/themes/PROJECTNAME/js/map-src/'
+    //     //             }))
+    //     //             .pipe(gulp.dest('./wp-content/themes/PROJECTNAME/js/'));
+    //     // });
+
+    // }
     // gulp.src('wp-content/themes/PROJECTNAME/js/map-src/**/*.js')
     //         // .pipe(jshint())
     //         // .pipe(jshint.reporter('default'))
