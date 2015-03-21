@@ -2,16 +2,25 @@
 module.exports = {
     // explain what this one is...
     site: {
-        client: 'zen-build',
+        client: 'CLIENTNAME',
         proj:   'PROJECTNAME'
+    },
+    url: {
+        root: 'http://localhost:8888/sites/CLIENTNAME/PROJECTNAME'
     },
     sass: {
         src:    './wp-content/themes/PROJECTNAME/sass/',
         dest:   './wp-content/themes/PROJECTNAME/'
     },
     js: {
-        src:    './wp-content/themes/PROJECTNAME/js/',
-        dest:   './wp-content/themes/PROJECTNAME/js/'
+        src:    [
+            './wp-content/themes/PROJECTNAME/js/map-src/**/*.js',
+            './wp-content/themes/PROJECTNAME/js/scripts-src/**/*.js'
+        ],
+        dest:    [
+            './wp-content/themes/PROJECTNAME/js/map.min.js',
+            './wp-content/themes/PROJECTNAME/js/scripts.min.js'
+        ]
     },
     svg: {
         src:    './wp-content/themes/PROJECTNAME/images/svg/',
