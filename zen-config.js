@@ -37,7 +37,9 @@ module.exports = {
             user: 'root',
             pass: 'root',
             host: 'localhost',
-            dumpDir: '.db/'
+            prefix: 'wp_',
+            dumpDir: '.db/',
+            dumpFile: 'db.sql'
         }
     }
     //,
