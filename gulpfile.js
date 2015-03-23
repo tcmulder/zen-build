@@ -66,7 +66,7 @@ gulp.task('css', function() {
 var svg = svgSprites;
 gulp.task('sprite', function () {
     gulp.src('wp-content/themes/__MYTHEMEHERE__/images/svg-raw/*.svg')
-        pipe(svg({
+        .pipe(svg({
             mode: {
                 inline: true,
                 symbol: true
