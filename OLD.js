@@ -1,3 +1,25 @@
+// //svg sprites
+// var svg = svgSprites;
+// gulp.task('sprite', function () {
+//     gulp.src('wp-content/themes/__MYTHEMEHERE__/images/svg-raw/*.svg')
+//         pipe(svg({
+//             mode: {
+//                 inline: true,
+//                 symbol: true
+//             },
+//             svg: {
+//                 xmlDeclaration : false
+//             }
+//         }))
+//         .pipe(gulp.dest("wp-content/themes/__MYTHEMEHERE__/images/svg-sprites"));
+// });
+
+
+
+
+
+
+
 // // find directories
 // function findDirs(startDir){
 //     var fs = require('fs');

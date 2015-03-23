@@ -11,7 +11,7 @@ var uglify      = require('gulp-uglifyjs');
 var jshint      = require('gulp-jshint');
 var compass     = require('gulp-compass');
 var prefix      = require('gulp-autoprefixer');
-//var svgSprite  = require('gulp-svg-sprite');
+var svg         = require('gulp-svg-sprite');
 var shell       = require('gulp-shell');
 var notify      = require('gulp-notify');
 var exit        = require('gulp-exit');
@@ -78,6 +78,31 @@ for(var i=0; i < config.js.src.length; i++){
     });
 }
 
+//svg
+for(var i=0; i < config.svg.src.length; i++){
+    gulp.task('svg-'+i, function() {
+        var i = this.seq[0].split('-')[1];
+        var destParts = config.svg.dest[i].split('/');
+        var destFile = destParts.pop();
+        var destPath = destParts.join('/') + '/';
+        console.log(destParts);
+        console.log(destFile);
+        console.log(destPath);
+        gulp.src(config.svg.src[i])
+            .pipe(svg({
+                mode: {
+                    inline: true,
+                    symbol: true
+                },
+                svg: {
+                    xmlDeclaration: false
+                }
+            }))
+            .pipe(gulp.dest(destPath))
+            .pipe(browserSync.reload({stream:true}));
+    });
+}
+
 //db
 gulp.task('db-exp', function () {
   return gulp.src('')
@@ -128,13 +153,17 @@ gulp.task('watch', function() {
     //css watch
     gulp.watch('wp-content/themes/PROJECTNAME/sass/**/*.scss', ['css']);
 
-    //gulp watches
+    //js watches
     for(var i=0; i < config.js.src.length; i++){
         gulp.watch(config.js.src[i], ['js-'+i]);
     }
 
-    //gulp.watch('wp-content/themes/PROJECTNAME/fonts/icons-raw/*.svg', ['icons', reload]);
-    //gulp.watch('wp-content/themes/PROJECTNAME/images/svg-raw/*.svg', ['sprite', reload]);
+    //svg watches
+    for(var i=0; i < config.js.src.length; i++){
+        gulp.watch(config.svg.src[i], ['svg-'+i]);
+    }
+
+    // general file changes
     gulp.watch("wp-content/themes/PROJECTNAME/**/*.{php,html}").on('change', reload);
 });
 
