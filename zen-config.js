@@ -21,8 +21,14 @@ var config = {
         ]
     },
     svg: {
-        src:    './wp-content/themes/PROJECTNAME/images/svg/',
-        dest:   './wp-content/themes/PROJECTNAME/images/svg/'
+        src:    [
+            './wp-content/themes/PROJECTNAME/images/some-src/**/*.svg',
+            './wp-content/themes/PROJECTNAME/images/another-src/**/*.svg'
+        ],
+        dest:    [
+            './wp-content/themes/PROJECTNAME/images/some-sprite/',
+            './wp-content/themes/PROJECTNAME/images/another-sprite/'
+        ]
     },
     watch: {
         src: [
