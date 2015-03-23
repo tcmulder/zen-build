@@ -48,8 +48,8 @@ gulp.task('css', function() {
             require: ['sass-globbing']
         }))
         .pipe(browserSync.reload({stream:true}))
-        .on("error", handleError)
-        .on("error", notify.onError(function(error){return error.message;}))
+        .on('error', handleError)
+        .on('error', notify.onError(function(error){return error.message;}))
         .pipe(notify({ message: 'Compiled Successfully!' }))
         .pipe(prefix('last 2 version', 'ie 10', 'ie 9'))
         .pipe(gulp.dest(config.sass.dest));
@@ -154,7 +154,7 @@ gulp.task('watch', function() {
     }
 
     // general file changes
-    gulp.watch("wp-content/themes/PROJECTNAME/**/*.{php,html}").on('change', reload);
+    gulp.watch(config.watch.src).on('change', reload);
 });
 
 /*------------------------------------*\
