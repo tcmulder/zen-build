@@ -56,7 +56,7 @@ gulp.task('css', function() {
 });
 
 //js
-for (var key in config.js) {
+for(var key in config.js) {
    gulp.task('js-'+key, function() {
         var key = this.seq[0].split('-')[1];
         var destParts = config.js[key].dest.split('/');
@@ -73,48 +73,13 @@ for (var key in config.js) {
             .pipe(gulp.dest(destPath))
             .pipe(browserSync.reload({stream:true}));
    });
-   // for (var prop in obj) {
-   //    // important check that this is objects own property
-   //    // not from prototype prop inherited
-   //    if(obj.hasOwnProperty(prop)){
-   //      alert(prop + " = " + obj[prop]);
-   //    }
-   // }
 }
-// for(var i=0; i < config.js.src.length; i++){
-
-//     gulp.task('js-'+i, function() {
-//         var i = this.seq[0].split('-')[1];
-//         var destParts = config.js.dest[i].split('/');
-//         var destFile = destParts.pop();
-//         var destPath = destParts.join('/') + '/';
-//         console.log(destParts);
-//         console.log(destFile);
-//         console.log(destPath);
-
-//         gulp.src(config.js.src[i])
-//             .pipe(jshint())
-//             .pipe(jshint.reporter('default'))
-//             .pipe(uglify(destFile, {
-//                 sourceRoot: config.url.root,
-//                 outSourceMap: true
-//             }))
-//             .pipe(gulp.dest(destPath))
-//             .pipe(browserSync.reload({stream:true}));
-//     });
-// }
 
 //svg
-for(var i=0; i < config.svg.src.length; i++){
-    gulp.task('svg-'+i, function() {
-        var i = this.seq[0].split('-')[1];
-        var destParts = config.svg.dest[i].split('/');
-        var destFile = destParts.pop();
-        var destPath = destParts.join('/') + '/';
-        console.log(destParts);
-        console.log(destFile);
-        console.log(destPath);
-        gulp.src(config.svg.src[i])
+for(var key in config.svg) {
+    gulp.task('svg-'+key, function() {
+        var key = this.seq[0].split('-')[1];
+        gulp.src(config.svg[key].src)
             .pipe(svg({
                 mode: {
                     inline: true,
@@ -124,8 +89,7 @@ for(var i=0; i < config.svg.src.length; i++){
                     xmlDeclaration: false
                 }
             }))
-            .pipe(gulp.dest(destPath))
-            .pipe(browserSync.reload({stream:true}));
+            .pipe(gulp.dest(config.svg[key].dest));
     });
 }
 
@@ -180,13 +144,13 @@ gulp.task('watch', function() {
     gulp.watch('wp-content/themes/PROJECTNAME/sass/**/*.scss', ['css']);
 
     //js watches
-    for (var key in config.js) {
+    for(var key in config.js){
        gulp.watch(config.js[key].src, ['js-'+key]);
-   }
+    }
 
     //svg watches
-    for(var i=0; i < config.svg.src.length; i++){
-        gulp.watch(config.svg.src[i], ['svg-'+i]);
+    for(var key in config.svg){
+       gulp.watch(config.svg[key].src, ['svg-'+key]);
     }
 
     // general file changes

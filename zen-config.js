@@ -20,25 +20,15 @@ var config = {
             dest: './wp-content/themes/PROJECTNAME/js/scripts.min.js'
         }
     },
-    // js: {
-    //     src:    [
-    //         './wp-content/themes/PROJECTNAME/js/map-src/**/*.js',
-    //         './wp-content/themes/PROJECTNAME/js/scripts-src/**/*.js'
-    //     ],
-    //     dest:    [
-    //         './wp-content/themes/PROJECTNAME/js/map.min.js',
-    //         './wp-content/themes/PROJECTNAME/js/scripts.min.js'
-    //     ]
-    // },
     svg: {
-        src:    [
-            './wp-content/themes/PROJECTNAME/images/some-src/**/*.svg',
-            './wp-content/themes/PROJECTNAME/images/another-src/**/*.svg'
-        ],
-        dest:    [
-            './wp-content/themes/PROJECTNAME/images/some-sprite/',
-            './wp-content/themes/PROJECTNAME/images/another-sprite/'
-        ]
+        some: {
+            src: './wp-content/themes/PROJECTNAME/images/some-src/**/*.svg',
+            dest: './wp-content/themes/PROJECTNAME/images/some-sprite/'
+        },
+        another: {
+            src: './wp-content/themes/PROJECTNAME/images/another-src/**/*.svg',
+            dest: './wp-content/themes/PROJECTNAME/images/another-sprite/'
+        }
     },
     watch: {
         src: [
