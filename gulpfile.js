@@ -141,7 +141,7 @@ gulp.task('watch', function() {
     });
 
     //css watch
-    gulp.watch('wp-content/themes/PROJECTNAME/sass/**/*.scss', ['css']);
+    gulp.watch(config.sass.src+'**/*.scss', ['css']);
 
     //js watches
     for(var key in config.js){
