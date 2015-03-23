@@ -38,9 +38,9 @@ var config = {
         // name of svg sprite to process (must not contain a "-" character)
         general: {
             // destination of files to process - can use globbing
-            src: './wp-content/themes/PROJECTNAME/images/some-src/**/*.svg',
+            src: './wp-content/themes/PROJECTNAME/images/general-src/**/*.svg',
             // destination of output file - expects relative path ending in "/"
-            dest: './wp-content/themes/PROJECTNAME/images/some-sprite/'
+            dest: './wp-content/themes/PROJECTNAME/images/general-sprite/'
         }
     },
     watch: {
