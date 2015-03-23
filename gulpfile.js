@@ -56,17 +56,14 @@ gulp.task('css', function() {
 });
 
 //js
-for(var i=0; i < config.js.src.length; i++){
-
-    gulp.task('js-'+i, function() {
-        var i = this.seq[0].split('-')[1];
-        var destParts = config.js.dest[i].split('/');
+for (var key in config.js) {
+   gulp.task('js-'+key, function() {
+        var key = this.seq[0].split('-')[1];
+        var destParts = config.js[key].dest.split('/');
         var destFile = destParts.pop();
         var destPath = destParts.join('/') + '/';
-        console.log(destParts);
-        console.log(destFile);
-        console.log(destPath);
-        gulp.src(config.js.src[i])
+
+        gulp.src(config.js[key].src)
             .pipe(jshint())
             .pipe(jshint.reporter('default'))
             .pipe(uglify(destFile, {
@@ -75,8 +72,37 @@ for(var i=0; i < config.js.src.length; i++){
             }))
             .pipe(gulp.dest(destPath))
             .pipe(browserSync.reload({stream:true}));
-    });
+   });
+   // for (var prop in obj) {
+   //    // important check that this is objects own property
+   //    // not from prototype prop inherited
+   //    if(obj.hasOwnProperty(prop)){
+   //      alert(prop + " = " + obj[prop]);
+   //    }
+   // }
 }
+// for(var i=0; i < config.js.src.length; i++){
+
+//     gulp.task('js-'+i, function() {
+//         var i = this.seq[0].split('-')[1];
+//         var destParts = config.js.dest[i].split('/');
+//         var destFile = destParts.pop();
+//         var destPath = destParts.join('/') + '/';
+//         console.log(destParts);
+//         console.log(destFile);
+//         console.log(destPath);
+
+//         gulp.src(config.js.src[i])
+//             .pipe(jshint())
+//             .pipe(jshint.reporter('default'))
+//             .pipe(uglify(destFile, {
+//                 sourceRoot: config.url.root,
+//                 outSourceMap: true
+//             }))
+//             .pipe(gulp.dest(destPath))
+//             .pipe(browserSync.reload({stream:true}));
+//     });
+// }
 
 //svg
 for(var i=0; i < config.svg.src.length; i++){
@@ -154,12 +180,12 @@ gulp.task('watch', function() {
     gulp.watch('wp-content/themes/PROJECTNAME/sass/**/*.scss', ['css']);
 
     //js watches
-    for(var i=0; i < config.js.src.length; i++){
-        gulp.watch(config.js.src[i], ['js-'+i]);
-    }
+    for (var key in config.js) {
+       gulp.watch(config.js[key].src, ['js-'+key]);
+   }
 
     //svg watches
-    for(var i=0; i < config.js.src.length; i++){
+    for(var i=0; i < config.svg.src.length; i++){
         gulp.watch(config.svg.src[i], ['svg-'+i]);
     }
 
