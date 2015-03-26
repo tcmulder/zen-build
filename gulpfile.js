@@ -132,19 +132,22 @@ gulp.task('db-imp', ['db-far']);
 /*------------------------------------*\
     ::Watch
 \*------------------------------------*/
-//browsersync
 gulp.task('watch', function() {
 
-    // browser sync reloading and so much more
+    // browsersync proxy
     browserSync({
         proxy: 'http://localhost:8888/sites/'+config.site.client+'/'+config.site.proj,
-        open: false
+        open: false,
+        snippetOptions: {
+            whitelist: ['/sites/'+config.site.client+'/'+config.site.proj+'/wp-admin/admin-ajax.php'], // whitelist checked first
+            blacklist: ['/sites/'+config.site.client+'/'+config.site.proj+'/wp-admin/**']
+        }
     });
 
-    // css watch
+    //css watch
     gulp.watch(config.sass.src+'**/*.scss', ['css']);
 
-    // js watches
+    //js watches
     for(var key in config.js){
        gulp.watch(config.js[key].src, ['js-'+key]);
     }
