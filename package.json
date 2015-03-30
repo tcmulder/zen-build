@@ -1,14 +1,14 @@
 {
   "name": "the-site",
-  "version": "0.1.2",
-  "description": "First gulp of gulp",
+  "version": "2.0.1",
+  "description": "The Zenman team's default built tool setup",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git@git.zenman.com:tcmulder/zen-grunt"
+    "url": "git@git.zenman.com:zen/zen-grunt"
   },
   "author": "@tcmulder",
   "license": "MIT",
