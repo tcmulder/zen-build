@@ -1,6 +1,6 @@
 {
   "name": "the-site",
-  "version": "0.1.2",
+  "version": "2.0.0",
   "description": "First gulp of gulp",
   "main": "index.js",
   "scripts": {
