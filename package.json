@@ -1,6 +1,6 @@
 {
-  "name": "the-site",
-  "version": "2.0.1",
+  "name": "zen-build",
+  "version": "2.0.2",
   "description": "The Zenman team's default built tool setup",
   "main": "index.js",
   "scripts": {
@@ -18,12 +18,11 @@
     "gulp-autoprefixer": "^2.1.0",
     "gulp-cache": "^0.2.8",
     "gulp-compass": "^2.0.3",
-    "gulp-exit": "^0.0.2",
     "gulp-jshint": "^1.9.2",
-    "gulp-notify": "^2.2.0",
     "gulp-shell": "^0.4.0",
     "gulp-svg-sprite": "^1.0.19",
     "gulp-uglifyjs": "^0.6.1",
+    "pipe-error-stop": "0.0.9",
     "vinyl": "^0.4.6"
   },
   "dependencies": {

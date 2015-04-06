@@ -6,6 +6,7 @@
     ::Plugins
 \*------------------------------------*/
 var gulp        = require('gulp');
+var stops       = require('pipe-error-stop')
 var browserSync = require('browser-sync');
 var uglify      = require('gulp-uglifyjs');
 var jshint      = require('gulp-jshint');
@@ -13,8 +14,6 @@ var compass     = require('gulp-compass');
 var prefix      = require('gulp-autoprefixer');
 var svg         = require('gulp-svg-sprite');
 var shell       = require('gulp-shell');
-var notify      = require('gulp-notify');
-var exit        = require('gulp-exit');
 var reload      = browserSync.reload;
 
 /*------------------------------------*\
@@ -23,22 +22,13 @@ var reload      = browserSync.reload;
 var config = require('./zen-config.js');
 
 /*------------------------------------*\
-    ::Common Functions
-\*------------------------------------*/
-//errors
-function handleError(err) {
-  console.log(err.toString());
-  this.emit('end');
-}
-
-/*------------------------------------*\
     ::Task Definitions
 \*------------------------------------*/
 
 //css
 gulp.task('css', function() {
     gulp.src(config.sass.src+'*.scss')
-        .pipe(compass({
+        .pipe(stops(compass({
             sourcemap: true,
             quiet: true,
             css: config.sass.dest,
@@ -46,11 +36,14 @@ gulp.task('css', function() {
             image: config.sass.src+'../images',
             style: 'compressed',
             require: ['sass-globbing']
+        }), {
+            eachErrorCallback: function(){
+                console.log('css task failure');
+                browserSync.notify("SASS Compilation Error");
+                browserSync.reload();
+            }
         }))
         .pipe(browserSync.reload({stream:true}))
-        .on('error', handleError)
-        .on('error', notify.onError(function(error){return error.message;}))
-        .pipe(notify({ message: 'Compiled Successfully!' }))
         .pipe(prefix('last 2 version', 'ie 10', 'ie 9'))
         .pipe(gulp.dest(config.sass.dest));
 });
@@ -66,9 +59,14 @@ for(var key in config.js) {
         gulp.src(config.js[key].src)
             .pipe(jshint())
             .pipe(jshint.reporter('default'))
-            .pipe(uglify(destFile, {
+            .pipe(stops(uglify(destFile, {
                 sourceRoot: config.url.root,
                 outSourceMap: true
+            }), {
+                eachErrorCallback: function(){
+                    browserSync.notify("JavaScript Compilation Error");
+                    console.log('js task failure');
+                }
             }))
             .pipe(gulp.dest(destPath))
             .pipe(browserSync.reload({stream:true}));
