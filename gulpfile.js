@@ -132,21 +132,12 @@ gulp.task('db-imp', ['db-far']);
 
 /////////////////////////////////////////////////////////////////
 
-
-
-// var shipit = require('shipit-cli');
-gulp.task('shipit-dep', function () {
+gulp.task('deploy:staging', function () {
     return gulp.src('').pipe(shell('shipit staging deploy'));
-
-    // return gulp.src('').pipe(shell('shipit staging hello'));
-    // return gulp.src('')
-    //     .pipe(shell([
-    //         'echo "test one"',
-    //         'echo "test two"'
-    //     ].join('&&')));
 });
-
-gulp.task('dep', ['shipit-dep']);
+gulp.task('deploy:production', function () {
+    return gulp.src('').pipe(shell('shipit production deploy'));
+});
 
 
 ///////////////////////////////////////////////////////////////

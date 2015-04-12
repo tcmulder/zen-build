@@ -20,7 +20,21 @@ module.exports = function (shipit) {
             deployTo: '/vagrant/html/stage',
             key: '/Users/tcmulder/.vagrant.d/insecure_private_key',
             servers: 'vagrant@127.0.0.1:2222'
+        },
+        production: {
+            branch: 'NOTATHINGdev_shipit',
+            workspace: '../shipitNOTATHING',
+            deployTo: '/vagrant/html/stage/NOTATHING',
+            key: '/Users/tcmulder/.vagrant.d/insecure_private_key/NOTATHING',
+            servers: 'NOTATHINGvagrant@127.0.0.1:2222'
         }
+    });
+
+    shipit.on('cleaned', function (test) {
+        console.log('--------- hey, look down');
+        console.log(shipit.options.environment);
+        console.log('--------- hey, look up');
+        return shipit.remote('pwd');
     });
 
 
@@ -31,7 +45,7 @@ module.exports = function (shipit) {
               return shipit.remote('mysql -uroot -pvagrant -Dwp_panorama -e \'SHOW TABLES\'');
             })
             .then(function () {
-              shipit.remote('ls -lah');
+              return shipit.remote('ls -lah');
             });
       });
     // shipit.task('deploy', function () {
