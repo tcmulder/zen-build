@@ -127,6 +127,43 @@ gulp.task('db-far', ['db-drop-and-import'], function () {
 });
 gulp.task('db-imp', ['db-far']);
 
+
+
+
+/////////////////////////////////////////////////////////////////
+
+
+
+// var shipit = require('shipit-cli');
+gulp.task('shipit-dep', function () {
+    return gulp.src('').pipe(shell('shipit staging deploy'));
+
+    // return gulp.src('').pipe(shell('shipit staging hello'));
+    // return gulp.src('')
+    //     .pipe(shell([
+    //         'echo "test one"',
+    //         'echo "test two"'
+    //     ].join('&&')));
+});
+
+gulp.task('dep', ['shipit-dep']);
+
+
+///////////////////////////////////////////////////////////////
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 /*------------------------------------*\
     ::Watch
 \*------------------------------------*/

@@ -1,7 +1,6 @@
 module.exports = function (shipit) {
 
     require('shipit-deploy')(shipit);
-    require('shipit-db')(shipit);
 
     shipit.initConfig({
         default: {
@@ -13,24 +12,7 @@ module.exports = function (shipit) {
             ],
             rsync: ['--del'],
             keepReleases: 2,
-            shallowClone: true,
-            db: {
-                local: {
-                    host     : 'localhost',
-                    adapter  : 'mysql',
-                    username : 'root',
-                    password : 'root',
-                    socket   : '/Applications/MAMP/tmp/mysql/mysql.sock',
-                    database : 'l1_panorama',
-                },
-                remote: {
-                    host     : 'localhost',
-                    adapter  : 'mysql',
-                    username : 'root',
-                    password : 'vagrant',
-                    database : 'wp_panorama',
-                }
-            }
+            shallowClone: true
         },
         staging: {
             branch: 'dev_shipit',
@@ -42,26 +24,16 @@ module.exports = function (shipit) {
     });
 
 
-    // var credentialParams = function credentialParams(dbConfig) {
-    //     var params = {
-    //       '-u': dbConfig.username || null,
-    //       '-p': dbConfig.password || null,
-    //       '-h': dbConfig.host || null,
-    //       '-S': dbConfig.socket || null,
-    //       '-P': dbConfig.port || null,
-    //     };
-
-    // }
-
-    //     shipit.task('test', function () {
-    //         shipit.log(anotherTest('staging'));
-    //         return anotherTest('staging');
-    //     });
-    //     function anotherTest(environment){
-    //         return shipit.config.db[environment];
-    //     }
-
-
+    shipit.task('db', function () {
+        shipit.log('Database stuff');
+        shipit.local('ls')
+            .then(function () {
+              return shipit.remote('mysql -uroot -pvagrant -Dwp_panorama -e \'SHOW TABLES\'');
+            })
+            .then(function () {
+              shipit.remote('ls -lah');
+            });
+      });
     // shipit.task('deploy', function () {
     //     shipit.log('Deploy the current build of PaperQuik.com.');
     //     shipit.local('grunt build')
@@ -80,4 +52,5 @@ module.exports = function (shipit) {
     shipit.task('hello', function () {
         return shipit.remote('echo "hello world"');
     });
+
 };
