@@ -71,16 +71,15 @@ The ``gulp db-far`` command will look for the siteurl reported by the database. 
 
 ## Changelog
 
-15.04.12 gulp_2.1.0_beta
-15.04.06 gulp_2.0.2
-15.03.30 gulp_2.0.1
-15.03.30 gulp_2.0.0
-15.03.30 gulp_1.3.0
-15.03.30 gulp_1.2.0
-15.03.30 gulp_1.1.1
-15.03.30 gulp_1.1.0
-15.03.30 gulp_1.0.0
-14.05.16 grunt_1.1.0
+2.0.2 (15.04.06)
+2.0.1 (15.03.30)
+2.0.0 (15.03.30)
+1.3.0 (15.03.30)
+1.2.0 (15.03.30)
+1.1.1 (15.03.30)
+1.1.0 (15.03.30)
+1.0.0 (15.03.30)
+0.0.1 (14.05.16)
 
 ## To Do:
 Feel free to contribute additional functionality to the Zenman gulp setup.
