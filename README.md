@@ -69,6 +69,19 @@ You can specify your database credentials in the ``zen-config.js`` file, and als
 
 The ``gulp db-far`` command will look for the siteurl reported by the database. It will then perform a serialized find and replace for that string with the root URL from the ``zen-config.js`` file.
 
+## Changelog
+
+15.04.12 gulp_2.1.0_beta
+15.04.06 gulp_2.0.2
+15.03.30 gulp_2.0.1
+15.03.30 gulp_2.0.0
+15.03.30 gulp_1.3.0
+15.03.30 gulp_1.2.0
+15.03.30 gulp_1.1.1
+15.03.30 gulp_1.1.0
+15.03.30 gulp_1.0.0
+14.05.16 grunt_1.1.0
+
 ## To Do:
 Feel free to contribute additional functionality to the Zenman gulp setup.
 
