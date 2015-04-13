@@ -82,7 +82,7 @@ The ``gulp db-far`` command will look for the siteurl reported by the database. 
 0.0.1 (14.05.16)
 
 ## To Do:
-Feel free to contribute additional functionality to the Zenman gulp setup.
+Feel free to contribute additional functionality to the Zenman gulp setup. If you do contribute, make sure to 1) update the branch's version number, 2) update the package.json version number, 3) update this README.md's version number, and 4) update the changelog so we can easily determine which version our individual projects are employing.
 
 ### Future Features List
 - Initialize New Website.
