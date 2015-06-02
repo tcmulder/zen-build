@@ -5,16 +5,18 @@
 /*------------------------------------*\
     ::Plugins
 \*------------------------------------*/
-var gulp        = require('gulp');
-var stops       = require('pipe-error-stop')
-var browserSync = require('browser-sync');
-var uglify      = require('gulp-uglifyjs');
-var jshint      = require('gulp-jshint');
-var compass     = require('gulp-compass');
-var prefix      = require('gulp-autoprefixer');
-var svg         = require('gulp-svg-sprite');
-var shell       = require('gulp-shell');
-var reload      = browserSync.reload;
+var gulp        = require('gulp'),
+    stops       = require('pipe-error-stop'),
+    browserSync = require('browser-sync'),
+    uglify      = require('gulp-uglifyjs'),
+    jshint      = require('gulp-jshint'),
+    sass        = require('gulp-sass'),
+    sourcemaps  = require('gulp-sourcemaps'),
+    prefix      = require('gulp-autoprefixer'),
+    cssGlobbing = require('gulp-css-globbing'),
+    svg         = require('gulp-svg-sprite'),
+    shell       = require('gulp-shell'),
+    reload      = browserSync.reload;
 
 /*------------------------------------*\
     ::Configuration
@@ -24,28 +26,50 @@ var config = require('./zen-config.js');
 /*------------------------------------*\
     ::Task Definitions
 \*------------------------------------*/
+var displayError = function(error) {
+
+    // Initial building up of the error
+    var errorString = '[' + error.plugin + ']';
+    errorString += ' ' + error.message.replace("\n",''); // Removes new line at the end
+
+    // If the error contains the filename or line number add it to the string
+    if(error.fileName)
+        errorString += ' in ' + error.fileName;
+
+    if(error.lineNumber)
+        errorString += ' on line ' + error.lineNumber;
+
+    // This will output an error like the following:
+    // [gulp-sass] error message in file_name on line 1
+    console.error(errorString);
+}
 
 //css
-gulp.task('css', function() {
-    gulp.src(config.sass.src+'*.scss')
-        .pipe(stops(compass({
-            sourcemap: true,
-            quiet: true,
-            css: config.sass.dest,
-            sass: config.sass.src,
-            image: config.sass.src+'../images',
-            style: 'compressed',
-            require: ['sass-globbing']
-        }), {
-            eachErrorCallback: function(){
-                console.log('css task failure');
-                browserSync.notify("SASS Compilation Error");
-                browserSync.reload();
-            }
-        }))
-        .pipe(browserSync.reload({stream:true}))
-        .pipe(prefix('last 2 version', 'ie 10', 'ie 9'))
-        .pipe(gulp.dest(config.sass.dest));
+gulp.task('sass', function () {
+  gulp.src(config.sass.supsrc)
+    .pipe(sourcemaps.init())
+    .pipe(cssGlobbing({
+        extensions: ['.scss'],
+        autoReplaceBlock: {
+            onOff: false,
+            globBlockBegin: 'cssGlobbingBegin',
+            globBlockEnd: 'cssGlobbingEnd',
+            globBlockContents: config.sass.supsersrc
+        },
+        scssImportPath: {
+            leading_underscore: true,
+            filename_extension: false
+        }
+    }))
+    .pipe(sass({
+        outputStyle: 'compressed'
+    }))
+    .on('error', function(err){
+        displayError(err);
+    })
+    .pipe(prefix('last 2 version', 'ie 10', 'ie 9'))
+    .pipe(sourcemaps.write())
+    .pipe(gulp.dest(config.sass.dest));
 });
 
 //js

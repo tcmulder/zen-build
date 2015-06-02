@@ -19,6 +19,8 @@ var config = {
         // location to look for sass files - expects a relative path ending in "/"
         // uses globbing for sub directories and files
         src:    './wp-content/themes/PROJECTNAME/sass/',
+        // location of the main sass file that handles the imports
+        supsrc: './wp-content/themes/PROJECTNAME/sass/style.scss',
         // destination for compiled css file - expects a relative path ending in "/"
         dest:   './wp-content/themes/PROJECTNAME/'
     },
