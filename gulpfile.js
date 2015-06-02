@@ -66,7 +66,10 @@ gulp.task('sass', function () {
     }))
     .on('error', function(err){
         displayError(err);
+        browserSync.notify("SASS Compilation Error");
+        browserSync.reload();
     })
+    .pipe(browserSync.reload({stream:true}))
     .pipe(prefix('last 2 version', 'ie 10', 'ie 9'))
     .pipe(sourcemaps.write())
     .pipe(gulp.dest(config.sass.dest));
