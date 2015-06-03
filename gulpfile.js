@@ -71,7 +71,7 @@ gulp.task('sass', function () {
     })
     .pipe(browserSync.reload({stream:true}))
     .pipe(prefix('last 2 version', 'ie 10', 'ie 9'))
-    .pipe(sourcemaps.write())
+    .pipe(sourcemaps.write('./'))
     .pipe(gulp.dest(config.sass.dest));
 });
 
@@ -170,7 +170,7 @@ gulp.task('watch', function() {
     });
 
     //css watch
-    gulp.watch(config.sass.src+'**/*.scss', ['css']);
+    gulp.watch(config.sass.src+'**/*.scss', ['sass']);
 
     //js watches
     for(var key in config.js){
