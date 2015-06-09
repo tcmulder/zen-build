@@ -27,7 +27,7 @@ By default, if you ``cd`` into the root of your project and run the command ``gu
 
 You can add just one set of a source SASS and destination CSS folder to the ``zen-config.js`` file.
 
-The ``gulp css`` command will run [gulp-compass](https://www.npmjs.org/package/gulp-compass) to compile your SASS files. It will require [sass-globbing](https://github.com/chriseppstein/sass-globbing), run [gulp-autoprefixer](https://www.npmjs.org/package/gulp-autoprefixer) to smartly prefix your CSS, and will result in a compressed CSS file. The gulp-compass module will also output a sourcemap file so your dev tool can match the compiled script to the original files _(note: sourcemap not currently working due to autoprefixer issue)_.
+The ``gulp css`` command will run [gulp-compass](https://www.npmjs.org/package/gulp-compass) to compile your SASS files. It will require [sass-globbing](https://github.com/chriseppstein/sass-globbing), run [gulp-autoprefixer](https://www.npmjs.org/package/gulp-autoprefixer) to smartly prefix your CSS, and will result in a compressed CSS file. The gulp-compass module will also output a sourcemap file so your dev tool can match the compiled script to the original files. It accomplishes this by having gulp-compass output its own sourcemap, having [gulp-sourcemaps](https://www.npmjs.com/package/gulp-sourcemaps) use that sourcemap, running gulp-autoprefixer, and then having gulp-sourcemaps again write out the file (otherwise, gulp-autoprefixer strips sourcemaps).
 
 ### The ``gulp js-foo`` Command
 You can add any number of JavaScript objects for processing in the ``zen-config.js`` file. In general, it is best to format these like ``scripts-src`` to compile to ``scripts.min.js``, ``nav-src`` to compile to ``nav.min.js``, and so on to keep everything organized alphabetically. You will link to the ``foo.min.js`` files in your theme.
@@ -68,6 +68,38 @@ This script assumes you have a WordPress database. It also has a dependency: it 
 You can specify your database credentials in the ``zen-config.js`` file, and also the root URL of your site (the path to the home page).
 
 The ``gulp db-far`` command will look for the siteurl reported by the database. It will then perform a serialized find and replace for that string with the root URL from the ``zen-config.js`` file.
+
+## Changelog
+
+2.0.3 (15.06.09)
+- Added gulp-sourcemap to create sass sourcemaps.
+
+2.0.2 (15.04.06)
+- Bug fixes
+
+2.0.1 (15.03.30)
+- Bug fixes
+
+2.0.0 (15.03.30)
+- Bug fixes
+
+1.3.0 (15.03.30)
+- Bug fixes
+
+1.2.0 (15.03.30)
+- Bug fixes
+
+1.1.1 (15.03.30)
+- Bug fixes
+
+1.1.0 (15.03.30)
+- Bug fixes
+
+1.0.0 (15.03.30)
+- Bug fixes
+
+0.0.1 (14.05.16)
+- Bug fixes
 
 ## To Do:
 Feel free to contribute additional functionality to the Zenman gulp setup.

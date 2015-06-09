@@ -1,5 +1,7 @@
 /*------------------------------------*\
-    ::Variables
+    ::Zen Build
+    -----------------------------------*
+    ::version 2.0.3
 \*------------------------------------*/
 
 /*------------------------------------*\
@@ -11,6 +13,7 @@ var browserSync = require('browser-sync');
 var uglify      = require('gulp-uglifyjs');
 var jshint      = require('gulp-jshint');
 var compass     = require('gulp-compass');
+var sourcemaps  = require('gulp-sourcemaps');
 var prefix      = require('gulp-autoprefixer');
 var svg         = require('gulp-svg-sprite');
 var shell       = require('gulp-shell');
@@ -44,7 +47,10 @@ gulp.task('css', function() {
             }
         }))
         .pipe(browserSync.reload({stream:true}))
-        .pipe(prefix('last 2 version', 'ie 10', 'ie 9'))
+
+        .pipe(sourcemaps.init({loadMaps: true}))
+              .pipe(prefix('last 2 version', 'ie 10', 'ie 9'))
+            .pipe(sourcemaps.write())
         .pipe(gulp.dest(config.sass.dest));
 });
 
