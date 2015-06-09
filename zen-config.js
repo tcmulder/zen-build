@@ -1,6 +1,8 @@
 /*------------------------------------*\
     ::Common Configuration
     ----------------------------------*
+    ::version 2.0.4
+
     common configuration options
     typical for most projects
 \*------------------------------------*/
@@ -39,8 +41,8 @@ var config = {
         general: {
             // destination of files to process - can use globbing
             src: './wp-content/themes/PROJECTNAME/images/general-src/**/*.svg',
-            // destination of output file - expects relative path ending in "/"
-            dest: './wp-content/themes/PROJECTNAME/images/general-sprite/'
+            // destination of output file - expects path and (optionally) a filename
+            dest: './wp-content/themes/PROJECTNAME/images/general.sprite.svg'
         }
     },
     watch: {

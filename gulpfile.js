@@ -1,7 +1,7 @@
 /*------------------------------------*\
     ::Zen Build
     -----------------------------------*
-    ::version 2.0.3
+    ::version 2.0.4
 \*------------------------------------*/
 
 /*------------------------------------*\
@@ -15,8 +15,10 @@ var jshint      = require('gulp-jshint');
 var compass     = require('gulp-compass');
 var sourcemaps  = require('gulp-sourcemaps');
 var prefix      = require('gulp-autoprefixer');
-var svg         = require('gulp-svg-sprite');
 var shell       = require('gulp-shell');
+var svg         = require('gulp-svg-sprite');
+var gulpif      = require('gulp-if');
+var symlink     = require('gulp-symlink');
 var reload      = browserSync.reload;
 
 /*------------------------------------*\
@@ -83,6 +85,12 @@ for(var key in config.js) {
 for(var key in config.svg) {
     gulp.task('svg-'+key, function() {
         var key = this.seq[0].split('-')[1];
+        var destParts = config.svg[key].dest.split('/');
+        var destFile = destParts.pop();
+        var destPath = destParts.join('/') + '/';
+        if(destFile != ''){
+            destPath = destPath + key + '-sprite/';
+        }
         gulp.src(config.svg[key].src)
             .pipe(svg({
                 mode: {
@@ -93,7 +101,8 @@ for(var key in config.svg) {
                     xmlDeclaration: false
                 }
             }))
-            .pipe(gulp.dest(config.svg[key].dest));
+            .pipe(gulp.dest(destPath))
+            .pipe(gulpif(destFile != '', symlink(destPath + '../' + destFile, { force: true })));
     });
 }
 
