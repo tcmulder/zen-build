@@ -1,6 +1,6 @@
 {
   "name": "zen-build",
-  "version": "2.0.2",
+  "version": "2.0.3",
   "description": "The Zenman team's default built tool setup",
   "main": "index.js",
   "scripts": {
@@ -20,6 +20,7 @@
     "gulp-compass": "^2.0.3",
     "gulp-jshint": "^1.9.2",
     "gulp-shell": "^0.4.0",
+    "gulp-sourcemaps": "^1.5.2",
     "gulp-svg-sprite": "^1.0.19",
     "gulp-uglifyjs": "^0.6.1",
     "pipe-error-stop": "0.0.9",
