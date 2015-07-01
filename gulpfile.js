@@ -49,8 +49,8 @@ gulp.task('css', function() {
         .pipe(browserSync.reload({stream:true}))
 
         .pipe(sourcemaps.init({loadMaps: true}))
-        .pipe(prefix('last 2 version', 'ie 10', 'ie 9'))
-        .pipe(sourcemaps.write(config.sass.dest))
+              .pipe(prefix('last 2 version', 'ie 10', 'ie 9'))
+            .pipe(sourcemaps.write(config.sass.dest))
         .pipe(gulp.dest(config.sass.dest));
 });
 
