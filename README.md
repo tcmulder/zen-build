@@ -32,11 +32,13 @@ The ``gulp css`` command will run [gulp-compass](https://www.npmjs.org/package/g
 ### The ``gulp js-foo`` Command
 You can add any number of JavaScript objects for processing in the ``zen-config.js`` file. In general, it is best to format these like ``scripts-src`` to compile to ``scripts.min.js``, ``nav-src`` to compile to ``nav.min.js``, and so on to keep everything organized alphabetically. You will link to the ``foo.min.js`` files in your theme.
 
-The ``gulp js-foo`` command will run [gulp-jshint](https://www.npmjs.org/package/gulp-jshint) to lint your JavaScript for the ``foo`` object in the ``zen-config.js`` file. The hints will output on the command line to help you keep your code clean. It will then run [gulp-uglifyjs](https://www.npmjs.org/package/gulp-uglifyjs) (not gulp-uglify) which will concatenate JavaScript files, uglify them, and output a single minified file. It will also output a sourcemap file so your dev tool can match the compiled script to the original files.
+The ``gulp js-foo`` command will run [gulp-uglifyjs](https://www.npmjs.org/package/gulp-uglifyjs) (not gulp-uglify) which will concatenate JavaScript files, uglify them, and output a single minified file. It will also output a sourcemap file so your dev tool can match the compiled script to the original files.
 
 ### The ``gulp svg-foo`` Command
 
-You can add any number of SVG sprite objects for processing in the ``zen-config.js`` file. In general, it is best to format these like ``general-src`` to compile to the ``general-sprite/`` directory, ``social-src`` to compile to the ``social-sprite/`` directory, and so on to keep everything organized alphabetically. You will link to the generated ``foo-sprite/symbol/svg/sprite.symbol.svg`` files in your theme as your [SVG sprite](http://css-tricks.com/svg-sprites-use-better-icon-fonts/).
+You can add any number of SVG sprite objects for processing in the ``zen-config.js`` file. In general, it is best to format these like ``images/general-src`` to compile to a ``images/general.sprite.svg`` file, ``images/social-src`` to compile to the ``images/social.sprite.svg`` file, and so on to keep everything organized alphabetically.
+
+You can link to the generated ``foo.sprite.svg`` files in your theme as your [SVG sprite](http://css-tricks.com/svg-sprites-use-better-icon-fonts/). The file is symlinked to the one generated at ``foo-sprite/symbol/svg/sprite.symbol.svg``. If you do not include a filename at the end of the ``dest`` property, as was common prior to version 2.0.4, the script is backwards compatible and you can still link to the ``sprite.symbol.svg`` if desired (though providing a filename is recommended).
 
 The ``gulp svg-foo`` command will run [gulp-svg-sprite](https://www.npmjs.org/package/gulp-svg-sprites) (not to be confused with the deprecated gulp-svg-sprites) to compile SVG files from the ``foo`` object in the ``zen-config.js`` file.
 
@@ -71,8 +73,14 @@ The ``gulp db-far`` command will look for the siteurl reported by the database. 
 
 ## Changelog
 
+2.0.5 (15.08.25)
+- Remove js hinting (@tcmulder).
+
+2.0.4 (15.06.09)
+- Allowed for SVG filenames rather than just directories (now more consistent with the JavaScript behavior) (@tcmulder).
+
 2.0.3 (15.06.09)
-- Added gulp-sourcemap to create sass sourcemaps.
+- Added gulp-sourcemap to create sass sourcemaps (@tcmulder).
 
 2.0.2 (15.04.06)
 - Bug fixes
