@@ -32,7 +32,7 @@ The ``gulp css`` command will run [gulp-compass](https://www.npmjs.org/package/g
 ### The ``gulp js-foo`` Command
 You can add any number of JavaScript objects for processing in the ``zen-config.js`` file. In general, it is best to format these like ``scripts-src`` to compile to ``scripts.min.js``, ``nav-src`` to compile to ``nav.min.js``, and so on to keep everything organized alphabetically. You will link to the ``foo.min.js`` files in your theme.
 
-The ``gulp js-foo`` command will run [gulp-jshint](https://www.npmjs.org/package/gulp-jshint) to lint your JavaScript for the ``foo`` object in the ``zen-config.js`` file. The hints will output on the command line to help you keep your code clean. It will then run [gulp-uglifyjs](https://www.npmjs.org/package/gulp-uglifyjs) (not gulp-uglify) which will concatenate JavaScript files, uglify them, and output a single minified file. It will also output a sourcemap file so your dev tool can match the compiled script to the original files.
+The ``gulp js-foo`` command will run [gulp-uglifyjs](https://www.npmjs.org/package/gulp-uglifyjs) (not gulp-uglify) which will concatenate JavaScript files, uglify them, and output a single minified file. It will also output a sourcemap file so your dev tool can match the compiled script to the original files.
 
 ### The ``gulp svg-foo`` Command
 
@@ -73,7 +73,10 @@ The ``gulp db-far`` command will look for the siteurl reported by the database. 
 
 ## Changelog
 
-2.0.3 (15.06.09)
+2.0.5 (15.08.25)
+- Remove js hinting (@tcmulder).
+
+2.0.4 (15.06.09)
 - Allowed for SVG filenames rather than just directories (now more consistent with the JavaScript behavior) (@tcmulder).
 
 2.0.3 (15.06.09)

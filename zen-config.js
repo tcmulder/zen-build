@@ -1,7 +1,7 @@
 /*------------------------------------*\
     ::Common Configuration
     ----------------------------------*
-    ::version 2.0.4
+    ::version 2.0.5
 
     common configuration options
     typical for most projects

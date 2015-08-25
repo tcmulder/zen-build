@@ -1,7 +1,7 @@
 /*------------------------------------*\
     ::Zen Build
     -----------------------------------*
-    ::version 2.0.4
+    ::version 2.0.5
 \*------------------------------------*/
 
 /*------------------------------------*\
@@ -11,7 +11,6 @@ var gulp        = require('gulp');
 var stops       = require('pipe-error-stop')
 var browserSync = require('browser-sync');
 var uglify      = require('gulp-uglifyjs');
-var jshint      = require('gulp-jshint');
 var compass     = require('gulp-compass');
 var sourcemaps  = require('gulp-sourcemaps');
 var prefix      = require('gulp-autoprefixer');
@@ -65,8 +64,6 @@ for(var key in config.js) {
         var destPath = destParts.join('/') + '/';
 
         gulp.src(config.js[key].src)
-            .pipe(jshint())
-            .pipe(jshint.reporter('default'))
             .pipe(stops(uglify(destFile, {
                 sourceRoot: config.url.root,
                 outSourceMap: true
