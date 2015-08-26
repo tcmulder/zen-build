@@ -19,7 +19,6 @@
     "gulp-cache": "^0.2.8",
     "gulp-compass": "^2.0.3",
     "gulp-if": "^1.2.5",
-    "gulp-jshint": "^1.9.2",
     "gulp-shell": "^0.4.0",
     "gulp-sourcemaps": "^1.5.2",
     "gulp-svg-sprite": "^1.0.19",
