@@ -29,14 +29,44 @@
 <body <?php body_class('page-'.$post->post_name); ?>>
 <div class="wrap-all-the-things">
     <header class="main-head">
-        <br>svg symlink:<br>
+
+        <hr>
+        <h1>Examples</h1>
+
+        <h2>svg symlink</h2>
         <svg viewBox="0 0 100 100" width="100" height="100" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
             <use xlink:href="<?php echo get_template_directory_uri(); ?>/images/general.sprite.svg#svg-arrow" />
         </svg>
-        <br>svg symbol:<br>
+
+        <h2>svg symbol</h2>
         <svg viewBox="0 0 100 100" width="100" height="100" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
             <use xlink:href="<?php echo get_template_directory_uri(); ?>/images/general-sprite/symbol/svg/sprite.symbol.svg#svg-cancel" />
         </svg>
+
+        <h2>Auotoprefixer</h2>
+        <div class="example--autoprefixer">
+            This should be blurred with a webkit prefix
+        </div>
+
+        <h2>Compass</h2>
+        <div class="example--compass">
+            This should have a data uri background
+        </div>
+
+        <h2>JavaScript</h2>
+        See your console. Initially should say the following:
+<pre>
+sample 1 script loaded                              sample-1.js:1
+sample 2 script loaded                              sample-2.js:1
+sample 2 script error follows (sample-2.js:4):      sample-2.js:3
+Uncaught ReferenceError: doThings is not defined    sample-2.js:4
+</pre>
+        If hinting/linting is enabled, there should be a warning in the console, but it isn't enabled by default.
+
+        <h1>End Examples</h1>
+        <hr>
+
+
         <div class="main-head__inner">
             <div class="main-head__nav">
                 <?php

@@ -6,6 +6,42 @@ Version: 3.0
 Author: Dominic Magnifico and Tomas Mulder
 Tags: zemplate, naked, clean, basic, fondation, semantic
 */
+
+
+/*------------------------------------*\
+    ::Build Tool Examples
+    ----------------------------------*
+    these examples will test various
+    features the build tool should be
+    able to handle.
+\*------------------------------------*/
+// basic test of a sass function
+body {
+    background: rgba(teal, .5);
+}
+
+// partial import and globbing
+@import "example-partials/**/*";
+
+// autoprefixer test
+.example--autoprefixer {
+    filter: blur(1px);
+}
+
+// compass test
+.example--compass {
+    display: inline-block;
+    background: inline-image("general-src/svg-cancel.svg");
+}
+
+
+
+
+
+
+
+
+
 // cssGlobbingBegin
 //
 // cssGlobbingEnd
@@ -23,8 +59,8 @@ Tags: zemplate, naked, clean, basic, fondation, semantic
 /*------------------------------------*\
     ::Framework Customizations
 \*------------------------------------*/
-$row-width: 1140px;                     //sets the width of the rows for foundation (must be above all).
-$include-html-classes: false;           //eliminates foundation basic styling from founcations _global.scss
+// $row-width: 1140px;                     //sets the width of the rows for foundation (must be above all).
+// $include-html-classes: false;           //eliminates foundation basic styling from founcations _global.scss
 
 /*------------------------------------*\
     ::Stars
@@ -35,8 +71,8 @@ $include-html-classes: false;           //eliminates foundation basic styling fr
     don't get output: they're just
     tools to use elsewhere.
 \*------------------------------------*/
-@import "stars/foundation/scss/foundation/components/grid";
-@import "stars/zemplate/*";
+// @import "stars/foundation/scss/foundation/components/grid";
+// @import "stars/zemplate/*";
 
 /*------------------------------------*\
     ::Plannets
@@ -46,7 +82,7 @@ $include-html-classes: false;           //eliminates foundation basic styling fr
     normalize, global text styling,
     or basic and reusable layout rules.
 \*------------------------------------*/
-@import "planets/**/*";
+// @import "planets/**/*";
 
 /*------------------------------------*\
     ::Moons
@@ -56,7 +92,7 @@ $include-html-classes: false;           //eliminates foundation basic styling fr
     like header, contact form, logo,
     navigation, etc.
 \*------------------------------------*/
-@import "moons/**/*";
+// @import "moons/**/*";
 
 /*------------------------------------*\
     ::Comets
@@ -67,7 +103,7 @@ $include-html-classes: false;           //eliminates foundation basic styling fr
     header that differs from every
     other page
 \*------------------------------------*/
-@import "comets/**/*";
+// @import "comets/**/*";
 
 /*------------------------------------*\
     ::Stars
@@ -78,4 +114,4 @@ $include-html-classes: false;           //eliminates foundation basic styling fr
     resets that require !important to
     work.
 \*------------------------------------*/
-@import "debris/**/*";
+// @import "debris/**/*";

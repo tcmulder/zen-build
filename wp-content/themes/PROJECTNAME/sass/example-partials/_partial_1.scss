@@ -1,6 +1,8 @@
 /*------------------------------------*\
-    ::404 Stylin
+    ::Partial 1
 \*------------------------------------*/
-.fourofour__content{
-	@include col(12);
+body {
+    &:before {
+        content: "Partial 1 Loaded"
+    }
 }
