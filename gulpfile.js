@@ -1,7 +1,7 @@
 /*------------------------------------*\
     ::Zen Build
     -----------------------------------*
-    ::version 2.0.5
+    ::version 2.0.6
 \*------------------------------------*/
 
 /*------------------------------------*\
@@ -145,7 +145,7 @@ gulp.task('watch', function() {
 
     // browsersync proxy
     browserSync({
-        proxy: 'http://localhost:8888/sites/'+config.site.client+'/'+config.site.proj,
+        proxy: config.url.root,
         open: false,
         snippetOptions: {
             whitelist: ['/sites/'+config.site.client+'/'+config.site.proj+'/wp-admin/admin-ajax.php'], // whitelist checked first

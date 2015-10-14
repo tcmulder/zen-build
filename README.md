@@ -73,6 +73,9 @@ The ``gulp db-far`` command will look for the siteurl reported by the database. 
 
 ## Changelog
 
+2.0.6 (15.10.14)
+- Updated browsersync URL to use config.url.root (@tcmulder).
+
 2.0.5 (15.08.25)
 - Remove js hinting (@tcmulder).
 
