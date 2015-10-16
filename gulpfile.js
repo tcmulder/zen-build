@@ -1,24 +1,27 @@
 /*------------------------------------*\
     ::Zen Build
     -----------------------------------*
-    ::version 2.0.6
+    ::version 2.0.7
 \*------------------------------------*/
 
 /*------------------------------------*\
     ::Plugins
 \*------------------------------------*/
-var gulp        = require('gulp');
-var stops       = require('pipe-error-stop')
+// initial
+var gulp = require('gulp');
+var stops = require('pipe-error-stop');
 var browserSync = require('browser-sync');
-var uglify      = require('gulp-uglifyjs');
-var compass     = require('gulp-compass');
-var sourcemaps  = require('gulp-sourcemaps');
-var prefix      = require('gulp-autoprefixer');
-var shell       = require('gulp-shell');
-var svg         = require('gulp-svg-sprite');
-var gulpif      = require('gulp-if');
-var symlink     = require('gulp-symlink');
-var reload      = browserSync.reload;
+var reload = browserSync.reload;
+
+// lazy loaded
+var compass;
+var sourcemaps;
+var prefix;
+var uglify;
+var svg;
+var symlink;
+var gulpif;
+var shell;
 
 /*------------------------------------*\
     ::Configuration
@@ -31,6 +34,10 @@ var config = require('./zen-config.js');
 
 //css
 gulp.task('css', function() {
+    compass = require('gulp-compass');
+    sourcemaps = require('gulp-sourcemaps');
+    prefix = require('gulp-autoprefixer');
+
     gulp.src(config.sass.src+'*.scss')
         .pipe(stops(compass({
             sourcemap: true,
@@ -57,6 +64,8 @@ gulp.task('css', function() {
 //js
 for(var key in config.js) {
    gulp.task('js-'+key, function() {
+        uglify = require('gulp-uglifyjs');
+
         var key = this.seq[0].split('-')[1];
         var destParts = config.js[key].dest.split('/');
         var destFile = destParts.pop();
@@ -80,6 +89,10 @@ for(var key in config.js) {
 //svg
 for(var key in config.svg) {
     gulp.task('svg-'+key, function() {
+        svg = require('gulp-svg-sprite');
+        symlink = require('gulp-symlink');
+        gulpif = require('gulp-if');
+
         var key = this.seq[0].split('-')[1];
         var destParts = config.svg[key].dest.split('/');
         var destFile = destParts.pop();
@@ -104,25 +117,28 @@ for(var key in config.svg) {
 
 //db
 gulp.task('db-exp', function () {
-  return gulp.src('')
-    .pipe(shell([
-        'echo "database export called"',
-        'test -d '+config.db.local.dumpDir+' || mkdir '+config.db.local.dumpDir+'',
-        'mysqldump -h'+config.db.local.host+' -u'+config.db.local.user+' -p\''+config.db.local.pass+'\' '+config.db.local.name+' > '+config.db.local.dumpDir+config.db.local.dumpFile,
-        'ls -lah '+config.db.local.dumpDir+config.db.local.dumpFile+' | awk \'{ print "export ran: "$9" is "$5}\''
-    ].join('&&')));
+    shell = require('gulp-shell');
+    return gulp.src('')
+        .pipe(shell([
+            'echo "database export called"',
+            'test -d '+config.db.local.dumpDir+' || mkdir '+config.db.local.dumpDir+'',
+            'mysqldump -h'+config.db.local.host+' -u'+config.db.local.user+' -p\''+config.db.local.pass+'\' '+config.db.local.name+' > '+config.db.local.dumpDir+config.db.local.dumpFile,
+            'ls -lah '+config.db.local.dumpDir+config.db.local.dumpFile+' | awk \'{ print "export ran: "$9" is "$5}\''
+        ].join('&&')));
 });
 gulp.task('db-drop-and-import', function () {
-  return gulp.src('')
-    .pipe(shell([
-        'echo "database import called"',
-        'mysqldump -h'+config.db.local.host+' -u'+config.db.local.user+' -p\''+config.db.local.pass+'\' --no-data '+config.db.local.name+' | grep ^DROP | mysql -h'+config.db.local.host+' -u'+config.db.local.user+' -p\''+config.db.local.pass+'\' '+config.db.local.name+'',
-        'mysql -h'+config.db.local.host+' -u'+config.db.local.user+' -p'+config.db.local.pass+' '+config.db.local.name+' < '+config.db.local.dumpDir+config.db.local.dumpFile,
-        'echo "import ran:"',
-        'mysql -h'+config.db.local.host+' -u'+config.db.local.user+' -p'+config.db.local.pass+' '+config.db.local.name+' -e \'SHOW TABLES\''
-    ].join('&&')));
+    shell = require('gulp-shell');
+    return gulp.src('')
+        .pipe(shell([
+            'echo "database import called"',
+            'mysqldump -h'+config.db.local.host+' -u'+config.db.local.user+' -p\''+config.db.local.pass+'\' --no-data '+config.db.local.name+' | grep ^DROP | mysql -h'+config.db.local.host+' -u'+config.db.local.user+' -p\''+config.db.local.pass+'\' '+config.db.local.name+'',
+            'mysql -h'+config.db.local.host+' -u'+config.db.local.user+' -p'+config.db.local.pass+' '+config.db.local.name+' < '+config.db.local.dumpDir+config.db.local.dumpFile,
+            'echo "import ran:"',
+            'mysql -h'+config.db.local.host+' -u'+config.db.local.user+' -p'+config.db.local.pass+' '+config.db.local.name+' -e \'SHOW TABLES\''
+        ].join('&&')));
 });
 gulp.task('db-far', ['db-drop-and-import'], function () {
+    shell = require('gulp-shell');
     var farCommand = '/Applications/MAMP/htdocs/_far/srdb.cli.php ';
         farCommand += '-h\''+config.db.local.host+'\' ';
         farCommand += '-u\''+config.db.local.user+'\' ';
