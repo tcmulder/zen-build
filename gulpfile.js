@@ -54,6 +54,29 @@ gulp.task('css', function() {
         .pipe(gulp.dest(config.sass.dest));
 });
 
+//critical css
+gulp.task('penthouse', ['css'], function () {
+    var penthouse = require('penthouse');
+    var fs = require('fs');
+    penthouse({
+        url : 'http://localhost:8888/sites/CLIENTNAME/PROJECTNAME',
+        css : 'wp-content/themes/panorama/style.css',
+        // OPTIONAL params
+        width : 1300,   // viewport width
+        height : 900,   // viewport height
+        forceInclude : [
+          '.keepMeEvenIfNotSeenInDom',
+          /^\.regexWorksToo/
+        ],
+        timeout: 30000, // ms; abort critical css generation after this timeout
+        strict: false, // set to true to throw on css errors (will run faster if no errors)
+        maxEmbeddedBase64Length: 1000 // charaters; strip out inline base64 encoded resources larger than this
+    }, function(err, criticalCss) {
+        if (err) { console.log(err); }
+        fs.writeFileSync('wp-content/themes/panorama/critical.php', '<style>'+criticalCss+'</style>');
+    });
+});
+
 //js
 for(var key in config.js) {
    gulp.task('js-'+key, function() {
