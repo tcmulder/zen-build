@@ -119,6 +119,9 @@ The ``gulp db-far`` command will look for the siteurl reported by the database. 
 Feel free to contribute additional functionality to the Zenman gulp setup.
 
 ### Future Features List
+- Add cricital path
+    - Install penthouse plugin and integrate into gulpfile.js
+    - Configure zen-config.js to pass in new variables
 - Initialize New Website.
     -  Clone repository from gitlab.
     -  Ask if it's a WordPress site.
