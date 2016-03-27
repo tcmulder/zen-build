@@ -1,4 +1,4 @@
-# Zenman gulp Setup
+# Zenman gulp Setup - v2.0.8
 ## Description
 The standard gulp setup for Zenman automates common tasks when building websites.
 
@@ -73,47 +73,50 @@ The ``gulp db-far`` command will look for the siteurl reported by the database. 
 
 ## Changelog
 
+2.0.7 (16.03.27)
+- Updated all the plugins. (@tcmulder).
+
 2.0.7 (15.10.16)
-- Added lazy load to many required scripts to boost speed (@tcmulder).
+- Added lazy load to many required scripts to boost speed. (@tcmulder).
 
 2.0.6 (15.10.14)
-- Updated browsersync URL to use config.url.root (@tcmulder).
+- Updated browsersync URL to use config.url.root. (@tcmulder).
 
 2.0.5 (15.08.25)
-- Remove js hinting (@tcmulder).
+- Remove js hinting. (@tcmulder).
 
 2.0.4 (15.06.09)
-- Allowed for SVG filenames rather than just directories (now more consistent with the JavaScript behavior) (@tcmulder).
+- Allowed for SVG filenames rather than just directories (now more consistent with the JavaScript behavior). (@tcmulder).
 
 2.0.3 (15.06.09)
-- Added gulp-sourcemap to create sass sourcemaps (@tcmulder).
+- Added gulp-sourcemap to create sass sourcemaps. (@tcmulder).
 
 2.0.2 (15.04.06)
-- Bug fixes
+- Bug fixes.
 
 2.0.1 (15.03.30)
-- Bug fixes
+- Bug fixes.
 
 2.0.0 (15.03.30)
-- Bug fixes
+- Bug fixes.
 
 1.3.0 (15.03.30)
-- Bug fixes
+- Bug fixes.
 
 1.2.0 (15.03.30)
-- Bug fixes
+- Bug fixes.
 
 1.1.1 (15.03.30)
-- Bug fixes
+- Bug fixes.
 
 1.1.0 (15.03.30)
-- Bug fixes
+- Bug fixes.
 
 1.0.0 (15.03.30)
-- Bug fixes
+- Bug fixes.
 
 0.0.1 (14.05.16)
-- Bug fixes
+- Bug fixes.
 
 ## To Do:
 Feel free to contribute additional functionality to the Zenman gulp setup.

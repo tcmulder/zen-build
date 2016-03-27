@@ -1,7 +1,7 @@
 /*------------------------------------*\
     ::Zen Build
     -----------------------------------*
-    ::version 2.0.7
+    ::version 2.0.8
 \*------------------------------------*/
 
 /*------------------------------------*\
@@ -11,17 +11,18 @@
 var gulp = require('gulp');
 var stops = require('pipe-error-stop');
 var browserSync = require('browser-sync');
+var bs = require('browser-sync').create();
 var reload = browserSync.reload;
 
 // lazy loaded
-var compass;
-var sourcemaps;
-var prefix;
-var uglify;
-var svg;
-var symlink;
-var gulpif;
-var shell;
+// var compass;
+// var sourcemaps;
+// var prefix;
+// var uglify;
+// var svg;
+// var symlink;
+// var gulpif;
+// var shell;
 
 /*------------------------------------*\
     ::Configuration
@@ -33,38 +34,36 @@ var config = require('./zen-config.js');
 \*------------------------------------*/
 
 //css
-gulp.task('css', function() {
-    compass = require('gulp-compass');
-    sourcemaps = require('gulp-sourcemaps');
-    prefix = require('gulp-autoprefixer');
+gulp.task('css', function () {
+    var sass = require('gulp-sass');
+    var sourcemaps = require('gulp-sourcemaps');
+    var prefix = require('gulp-autoprefixer');
+    var glob = require('gulp-sass-glob');
 
-    gulp.src(config.sass.src+'*.scss')
-        .pipe(stops(compass({
-            sourcemap: true,
-            quiet: true,
-            css: config.sass.dest,
-            sass: config.sass.src,
-            image: config.sass.src+'../images',
-            style: 'compressed',
-            require: ['sass-globbing']
-        }), {
-            eachErrorCallback: function(){
-                console.log('css task failure');
-                browserSync.notify("SASS Compilation Error");
-                browserSync.reload();
-            }
-        }))
-        .pipe(browserSync.reload({stream:true}))
-        .pipe(sourcemaps.init({loadMaps: true}))
+    return gulp.src(config.sass.src+'*.scss')
+        .pipe(sourcemaps.init())
+        .pipe(glob())
+        .pipe(sass({
+            outputStyle: 'compressed'
+        })
+            .on('error', sass.logError))
+            .on('error', function(err){
+                browserSync.notify('CSS Task Error: <pre style="font-size:.1em;text-align:left;">'+err+'</pre>', 99999);
+                console.log('css task error');
+            })
         .pipe(prefix('last 2 version', 'ie 10', 'ie 9'))
+        .pipe(browserSync.stream({injectChanges:true}))
         .pipe(sourcemaps.write('./'))
         .pipe(gulp.dest(config.sass.dest));
 });
 
+
 //js
 for(var key in config.js) {
    gulp.task('js-'+key, function() {
-        uglify = require('gulp-uglifyjs');
+        var uglify = require('gulp-uglify');
+        var concat = require('gulp-concat');
+        var sourcemaps = require('gulp-sourcemaps');
 
         var key = this.seq[0].split('-')[1];
         var destParts = config.js[key].dest.split('/');
@@ -72,26 +71,53 @@ for(var key in config.js) {
         var destPath = destParts.join('/') + '/';
 
         gulp.src(config.js[key].src)
-            .pipe(stops(uglify(destFile, {
-                sourceRoot: config.url.root,
-                outSourceMap: true
-            }), {
-                eachErrorCallback: function(){
-                    browserSync.notify("JavaScript Compilation Error");
+            .pipe(sourcemaps.init())
+            .pipe(stops(uglify()
+                .on('error', function(err){
+                    console.log(err);
                     console.log('js task failure');
-                }
-            }))
+                    browserSync.notify('JS Task Error: <pre style="font-size:.1em;text-align:left;">'+err+'</pre>', 99999);
+                })
+            ))
+            .pipe(sourcemaps.write('./'))
             .pipe(gulp.dest(destPath))
             .pipe(browserSync.reload({stream:true}));
    });
 }
 
+
+
+//js
+// for(var key in config.js) {
+//    gulp.task('js-'+key, function() {
+//         uglify = require('gulp-uglifyjs');
+
+//         var key = this.seq[0].split('-')[1];
+//         var destParts = config.js[key].dest.split('/');
+//         var destFile = destParts.pop();
+//         var destPath = destParts.join('/') + '/';
+
+//         gulp.src(config.js[key].src)
+//             .pipe(stops(uglify(destFile, {
+//                 sourceRoot: config.url.root,
+//                 outSourceMap: true
+//             }), {
+//                 eachErrorCallback: function(){
+//                     browserSync.notify("JavaScript Compilation Error");
+//                     console.log('js task failure');
+//                 }
+//             }))
+//             .pipe(gulp.dest(destPath))
+//             .pipe(browserSync.reload({stream:true}));
+//    });
+// }
+
 //svg
 for(var key in config.svg) {
     gulp.task('svg-'+key, function() {
-        svg = require('gulp-svg-sprite');
-        symlink = require('gulp-symlink');
-        gulpif = require('gulp-if');
+        var svg = require('gulp-svg-sprite');
+        var symlink = require('gulp-symlink');
+        var gulpif = require('gulp-if');
 
         var key = this.seq[0].split('-')[1];
         var destParts = config.svg[key].dest.split('/');
@@ -117,7 +143,7 @@ for(var key in config.svg) {
 
 //db
 gulp.task('db-exp', function () {
-    shell = require('gulp-shell');
+    var shell = require('gulp-shell');
     return gulp.src('')
         .pipe(shell([
             'echo "database export called"',
@@ -127,7 +153,7 @@ gulp.task('db-exp', function () {
         ].join('&&')));
 });
 gulp.task('db-drop-and-import', function () {
-    shell = require('gulp-shell');
+    var shell = require('gulp-shell');
     return gulp.src('')
         .pipe(shell([
             'echo "database import called"',
@@ -138,7 +164,7 @@ gulp.task('db-drop-and-import', function () {
         ].join('&&')));
 });
 gulp.task('db-far', ['db-drop-and-import'], function () {
-    shell = require('gulp-shell');
+    var shell = require('gulp-shell');
     var farCommand = '/Applications/MAMP/htdocs/_far/srdb.cli.php ';
         farCommand += '-h\''+config.db.local.host+'\' ';
         farCommand += '-u\''+config.db.local.user+'\' ';
