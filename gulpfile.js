@@ -59,7 +59,7 @@ gulp.task('penthouse', ['css'], function () {
     var penthouse = require('penthouse');
     var fs = require('fs');
     penthouse({
-        url : 'http://localhost:8888/sites/CLIENTNAME/PROJECTNAME',
+        url : 'http://localhost/sites/CLIENTNAME/PROJECTNAME',
         css : 'wp-content/themes/panorama/style.css',
         // OPTIONAL params
         width : 1300,   // viewport width
