@@ -18,7 +18,7 @@ var config = {
         root: 'http://localhost/sites/CLIENTNAME/PROJECTNAME'
     },
     sass: {
-        // location to look for sass files - expects a relative path ending in "/"
+        // location to look for sass files (must not contain a "-" character)
         // uses globbing for sub directories and files
         src:    './wp-content/themes/PROJECTNAME/sass/',
         // destination for compiled css file - expects a relative path ending in "/"

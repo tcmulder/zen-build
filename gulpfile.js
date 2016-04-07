@@ -38,23 +38,28 @@ gulp.task('css', function () {
     var sass = require('gulp-sass');
     var sourcemaps = require('gulp-sourcemaps');
     var prefix = require('gulp-autoprefixer');
+    var recursive = require('recursive-readdir');
     var glob = require('gulp-sass-glob');
-
-    return gulp.src(config.sass.src+'*.scss')
-        .pipe(sourcemaps.init())
-        .pipe(glob())
-        .pipe(sass({
-            outputStyle: 'compressed'
-        })
-            .on('error', sass.logError))
-            .on('error', function(err){
-                browserSync.notify('CSS Task Error: <pre style="font-size:.1em;text-align:left;">'+err+'</pre>', 99999);
-                console.log('css task error');
-            })
-        .pipe(prefix('last 2 version', 'ie 10', 'ie 9'))
-        .pipe(browserSync.stream({injectChanges:true}))
-        .pipe(sourcemaps.write('./'))
-        .pipe(gulp.dest(config.sass.dest));
+    recursive(config.sass.src, ['_*.scss', '.*'], function (err, files) {
+        files.forEach(function(file) {
+            console.log(file);
+            return gulp.src(file)
+                .pipe(sourcemaps.init())
+                .pipe(glob())
+                .pipe(sass({
+                    outputStyle: 'compressed'
+                })
+                    .on('error', sass.logError))
+                    .on('error', function(err){
+                        browserSync.notify('CSS Task Error: <pre style="font-size:.1em;text-align:left;">'+err+'</pre>', 99999);
+                        console.log('css task error');
+                    })
+                .pipe(prefix('last 2 version', 'ie 10', 'ie 9'))
+                .pipe(browserSync.stream({injectChanges:true}))
+                .pipe(sourcemaps.write('./'))
+                .pipe(gulp.dest(config.sass.dest));
+        });
+    });
 });
 
 
