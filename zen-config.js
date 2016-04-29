@@ -1,7 +1,7 @@
 /*------------------------------------*\
     ::Common Configuration
     ----------------------------------*
-    ::version 2.0.7
+    ::version 2.0.8
 
     common configuration options
     typical for most projects
@@ -15,7 +15,7 @@ var config = {
     },
     url: {
         // address of the home page
-        root: 'http://localhost:8888/sites/CLIENTNAME/PROJECTNAME'
+        root: 'http://localhost/sites/CLIENTNAME/PROJECTNAME'
     },
     sass: {
         // location to look for sass files - expects a relative path ending in "/"

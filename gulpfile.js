@@ -1,7 +1,7 @@
 /*------------------------------------*\
     ::Zen Build
     -----------------------------------*
-    ::version 2.0.7
+    ::version 2.0.8
 \*------------------------------------*/
 
 /*------------------------------------*\
@@ -9,19 +9,6 @@
 \*------------------------------------*/
 // initial
 var gulp = require('gulp');
-var stops = require('pipe-error-stop');
-var browserSync = require('browser-sync');
-var reload = browserSync.reload;
-
-// lazy loaded
-var compass;
-var sourcemaps;
-var prefix;
-var uglify;
-var svg;
-var symlink;
-var gulpif;
-var shell;
 
 /*------------------------------------*\
     ::Configuration
@@ -34,9 +21,11 @@ var config = require('./zen-config.js');
 
 //css
 gulp.task('css', function() {
-    compass = require('gulp-compass');
-    sourcemaps = require('gulp-sourcemaps');
-    prefix = require('gulp-autoprefixer');
+    var stops = require('pipe-error-stop');
+    var compass = require('gulp-compass');
+    var sourcemaps = require('gulp-sourcemaps');
+    var prefix = require('gulp-autoprefixer');
+    var browserSync = require('browser-sync');
 
     gulp.src(config.sass.src+'*.scss')
         .pipe(stops(compass({
@@ -54,9 +43,9 @@ gulp.task('css', function() {
                 browserSync.reload();
             }
         }))
-        .pipe(browserSync.reload({stream:true}))
         .pipe(sourcemaps.init({loadMaps: true}))
         .pipe(prefix('last 2 version', 'ie 10', 'ie 9'))
+        .pipe(browserSync.stream({injectChanges:true}))
         .pipe(sourcemaps.write('./'))
         .pipe(gulp.dest(config.sass.dest));
 });
@@ -64,7 +53,9 @@ gulp.task('css', function() {
 //js
 for(var key in config.js) {
    gulp.task('js-'+key, function() {
-        uglify = require('gulp-uglifyjs');
+        var stops = require('pipe-error-stop');
+        var uglify = require('gulp-uglifyjs');
+        var browserSync = require('browser-sync');
 
         var key = this.seq[0].split('-')[1];
         var destParts = config.js[key].dest.split('/');
@@ -89,9 +80,9 @@ for(var key in config.js) {
 //svg
 for(var key in config.svg) {
     gulp.task('svg-'+key, function() {
-        svg = require('gulp-svg-sprite');
-        symlink = require('gulp-symlink');
-        gulpif = require('gulp-if');
+        var svg = require('gulp-svg-sprite');
+        var symlink = require('gulp-symlink');
+        var gulpif = require('gulp-if');
 
         var key = this.seq[0].split('-')[1];
         var destParts = config.svg[key].dest.split('/');
@@ -159,6 +150,8 @@ gulp.task('db-imp', ['db-far']);
 \*------------------------------------*/
 gulp.task('watch', function() {
 
+    var browserSync = require('browser-sync');
+
     // browsersync proxy
     browserSync({
         proxy: config.url.root,
@@ -178,7 +171,7 @@ gulp.task('watch', function() {
     }
 
     // general file changes
-    gulp.watch(config.watch.src).on('change', reload);
+    gulp.watch(config.watch.src).on('change', browserSync.reload);
 });
 
 /*------------------------------------*\
