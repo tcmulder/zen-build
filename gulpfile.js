@@ -14,16 +14,6 @@ var browserSync = require('browser-sync');
 var bs = require('browser-sync').create();
 var reload = browserSync.reload;
 
-// lazy loaded
-// var compass;
-// var sourcemaps;
-// var prefix;
-// var uglify;
-// var svg;
-// var symlink;
-// var gulpif;
-// var shell;
-
 /*------------------------------------*\
     ::Configuration
 \*------------------------------------*/
@@ -64,18 +54,23 @@ gulp.task('css', function () {
 
 
 //js
-for(var key in config.js) {
-   gulp.task('js-'+key, function() {
-        var uglify = require('gulp-uglify');
-        var concat = require('gulp-concat');
-        var sourcemaps = require('gulp-sourcemaps');
+gulp.task('js', function() {
 
-        var key = this.seq[0].split('-')[1];
-        var destParts = config.js[key].dest.split('/');
-        var destFile = destParts.pop();
-        var destPath = destParts.join('/') + '/';
+    var fs = require('fs');
+    var uglify = require('gulp-uglify');
+    var concat = require('gulp-concat');
+    var sourcemaps = require('gulp-sourcemaps');
 
-        gulp.src(config.js[key].src)
+    function getDirectories(path) {
+        return fs.readdirSync(path).filter(function(file){
+            return fs.statSync(path+'/'+file).isDirectory() && file.indexOf('-src') === file.length - 4;
+        });
+    }
+    getDirectories(config.js.src).forEach(function(folder){
+        // var destParts = config.js[key].dest.split('/');
+        // var destFile = destParts.pop();
+        // var destPath = destParts.join('/') + '/';
+        gulp.src(folder)
             .pipe(sourcemaps.init())
             .pipe(stops(uglify()
                 .on('error', function(err){
@@ -85,10 +80,11 @@ for(var key in config.js) {
                 })
             ))
             .pipe(sourcemaps.write('./'))
-            .pipe(gulp.dest(destPath))
+            .pipe(gulp.dest('./'))
             .pipe(browserSync.reload({stream:true}));
-   });
-}
+    });
+});
+
 
 
 
@@ -204,9 +200,7 @@ gulp.task('watch', function() {
     gulp.watch(config.sass.src+'**/*.scss', ['css']);
 
     //js watches
-    for(var key in config.js){
-       gulp.watch(config.js[key].src, ['js-'+key]);
-    }
+    gulp.watch(config.js.src+'**/*.js', ['js']);
 
     // general file changes
     gulp.watch(config.watch.src).on('change', reload);

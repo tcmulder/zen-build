@@ -18,20 +18,16 @@ var config = {
         root: 'http://localhost/sites/CLIENTNAME/PROJECTNAME'
     },
     sass: {
-        // location to look for sass files (must not contain a "-" character)
-        // uses globbing for sub directories and files
+        // location to look for sass files (all non-partials output unique files)
         src:    './wp-content/themes/PROJECTNAME/sass/',
         // destination for compiled css file - expects a relative path ending in "/"
         dest:   './wp-content/themes/PROJECTNAME/'
     },
     js: {
-        // name of script to process (must not contain a "-" character)
-        scripts: {
-            // destination of files to process - can use globbing
-            src: './wp-content/themes/PROJECTNAME/js/scripts-src/**/*.js',
-            // destination of output file - expects path and filename
-            dest: './wp-content/themes/PROJECTNAME/js/scripts.min.js'
-        }
+        // destination of files to process - can use globbing
+        src: './wp-content/themes/PROJECTNAME/js/',
+        // destination of output file - expects path and filename
+        dest: './wp-content/themes/PROJECTNAME/js/'
         // you can add additional script objects using the same format as the above object
         // each will be available for processing separately
         // (e.g. you can run gulp js-scripts for the above script)
