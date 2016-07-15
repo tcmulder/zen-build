@@ -1,7 +1,7 @@
 /*------------------------------------*\
     ::Zen Build
     -----------------------------------*
-    ::version 2.0.8
+    ::version 2.0.9
 \*------------------------------------*/
 
 /*------------------------------------*\
@@ -45,7 +45,6 @@ gulp.task('css', function() {
         }))
         .pipe(sourcemaps.init({loadMaps: true}))
         .pipe(prefix('last 2 version', 'ie 10', 'ie 9'))
-        .pipe(browserSync.stream({injectChanges:true}))
         .pipe(sourcemaps.write('./'))
         .pipe(gulp.dest(config.sass.dest));
 });
@@ -108,7 +107,7 @@ for(var key in config.svg) {
 
 //db
 gulp.task('db-exp', function () {
-    shell = require('gulp-shell');
+    var shell = require('gulp-shell');
     return gulp.src('')
         .pipe(shell([
             'echo "database export called"',
@@ -118,7 +117,7 @@ gulp.task('db-exp', function () {
         ].join('&&')));
 });
 gulp.task('db-drop-and-import', function () {
-    shell = require('gulp-shell');
+    var shell = require('gulp-shell');
     return gulp.src('')
         .pipe(shell([
             'echo "database import called"',
@@ -129,7 +128,7 @@ gulp.task('db-drop-and-import', function () {
         ].join('&&')));
 });
 gulp.task('db-far', ['db-drop-and-import'], function () {
-    shell = require('gulp-shell');
+    var shell = require('gulp-shell');
     var farCommand = '/Applications/MAMP/htdocs/_far/srdb.cli.php ';
         farCommand += '-h\''+config.db.local.host+'\' ';
         farCommand += '-u\''+config.db.local.user+'\' ';
@@ -148,30 +147,72 @@ gulp.task('db-imp', ['db-far']);
 /*------------------------------------*\
     ::Watch
 \*------------------------------------*/
-gulp.task('watch', function() {
+gulp.task('watch', function(gulpCallback) {
 
+    var isVagrant =  false;
     var browserSync = require('browser-sync');
+    var os = require('os');
+    var url = config.url.root;
 
-    // browsersync proxy
-    browserSync({
-        proxy: config.url.root,
+    // add the IP address from vagrant since host detection seems faulty
+    // see https://www.browsersync.io/docs/options/#option-host
+    var theIP = os.networkInterfaces()["eth1"];
+    if(theIP !== undefined){
+        isVagrant = true;
+        var url = 'http://'+theIP[0].address+'/sites/'+config.site.client+'/'+config.site.proj;
+    }
+
+    browserSync.init({
+        proxy: url,
         open: false,
+        https: false,
         snippetOptions: {
             whitelist: ['/sites/'+config.site.client+'/'+config.site.proj+'/wp-admin/admin-ajax.php'], // whitelist checked first
             blacklist: ['/sites/'+config.site.client+'/'+config.site.proj+'/wp-admin/**']
         }
+    }, function callback() {
+
+        // make watch slower for vagrant performance
+        var intervalIncrease = 0;
+        if(isVagrant){
+            intervalIncrease = 1000;
+        }
+
+        //js watches
+        for(var key in config.js){
+           gulp.watch(config.js[key].src, {
+                interval: 100 + intervalIncrease, // default 100
+                debounceDelay: 500 + intervalIncrease, // default 500
+                mode: 'poll'
+            }, ['js-'+key]);
+        }
+
+        // general file changes
+        gulp.watch(config.watch.src, {
+            interval: 100 + intervalIncrease, // default 100
+            debounceDelay: 500 + intervalIncrease, // default 500
+            mode: 'poll'
+        }).on(
+            'change',
+            browserSync.reload
+        );
+
+        //css watch
+        gulp.watch(config.sass.src+'**/*.scss',{
+            interval: 100 + intervalIncrease, // default 100
+            debounceDelay: 500 + intervalIncrease, // default 500
+            mode: 'poll'
+        },['css']);
+
+        gulp.watch(config.sass.dest+'style.css', function() {
+        gulp.src(config.sass.dest+'style.css')
+            .pipe(browserSync.stream());
+        });
+
+        gulpCallback();
+
     });
 
-    //css watch
-    gulp.watch(config.sass.src+'**/*.scss', ['css']);
-
-    //js watches
-    for(var key in config.js){
-       gulp.watch(config.js[key].src, ['js-'+key]);
-    }
-
-    // general file changes
-    gulp.watch(config.watch.src).on('change', browserSync.reload);
 });
 
 /*------------------------------------*\
