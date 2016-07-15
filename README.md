@@ -73,9 +73,9 @@ The ``gulp db-far`` command will look for the siteurl reported by the database. 
 
 ## Changelog
 2.0.9 (16.07.15)
-- Changed how SASS gets watched to avoid a race condition.
-- Added some auto vagrant helpers.
-- Put shell require in appropriate scope to lazy load.
+- Changed how SASS gets watched to avoid a race condition (@tcmulder).
+- Added some auto vagrant helpers (@tcmulder).
+- Put shell require in appropriate scope to lazy load (@tcmulder).
 
 2.0.8 (16.04.29)
 - Updated browsersync (@tcmulder).
