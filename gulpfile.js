@@ -1,7 +1,7 @@
 /*------------------------------------*\
     ::Zen Build
     -----------------------------------*
-    ::version 2.0.10
+    ::version 2.0.11
 \*------------------------------------*/
 
 /*------------------------------------*\
@@ -135,7 +135,7 @@ gulp.task('db-drop-and-import', function () {
 });
 gulp.task('db-far', ['db-drop-and-import'], function () {
     var shell = require('gulp-shell');
-    var farCommand = '/Applications/MAMP/htdocs/_far/srdb.cli.php ';
+    var farCommand =  'node_modules/search-replace-db/srdb.cli.php ';
         farCommand += '-h\''+config.db.local.host+'\' ';
         farCommand += '-u\''+config.db.local.user+'\' ';
         farCommand += '-p\''+config.db.local.pass+'\' ';
