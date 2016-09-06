@@ -1,7 +1,7 @@
 /*------------------------------------*\
     ::Zen Build
     -----------------------------------*
-    ::version 2.0.9
+    ::version 2.0.10
 \*------------------------------------*/
 
 /*------------------------------------*\
@@ -44,7 +44,13 @@ gulp.task('css', function() {
             }
         }))
         .pipe(sourcemaps.init({loadMaps: true}))
-        .pipe(prefix('last 2 version', 'ie 10', 'ie 9'))
+        .pipe(prefix({
+            browsers: [
+                'last 2 versions',
+                'ie >= 10',
+                'Safari >= 7'
+            ]
+        }))
         .pipe(sourcemaps.write('./'))
         .pipe(gulp.dest(config.sass.dest));
 });
