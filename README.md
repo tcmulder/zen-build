@@ -72,6 +72,12 @@ You can specify your database credentials in the ``zen-config.js`` file, and als
 The ``gulp db-far`` command will look for the siteurl reported by the database. It will then perform a serialized find and replace for that string with the root URL from the ``zen-config.js`` file.
 
 ## Changelog
+2.0.11 (16.09.06)
+- Added database FAR as a module (@tcmulder).
+
+2.0.10 (16.09.06)
+- Updated autoprefixer to support older Safari (@tcmulder).
+
 2.0.9 (16.07.15)
 - Changed how SASS gets watched to avoid a race condition (@tcmulder).
 - Added some auto vagrant helpers (@tcmulder).
