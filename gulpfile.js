@@ -1,7 +1,7 @@
 /*------------------------------------*\
-    ::Zen Build
+    ::Aqua Build
     -----------------------------------*
-    ::version 2.0.11
+    ::version 3.0.0
 \*------------------------------------*/
 
 /*------------------------------------*\
@@ -13,7 +13,7 @@ var gulp = require('gulp');
 /*------------------------------------*\
     ::Configuration
 \*------------------------------------*/
-var config = require('./zen-config.js');
+var config = require('./aqua-config.js');
 
 /*------------------------------------*\
     ::Task Definitions
@@ -172,10 +172,6 @@ gulp.task('watch', function(gulpCallback) {
         proxy: url,
         open: false,
         https: false,
-        snippetOptions: {
-            whitelist: ['/sites/'+config.site.client+'/'+config.site.proj+'/wp-admin/admin-ajax.php'], // whitelist checked first
-            blacklist: ['/sites/'+config.site.client+'/'+config.site.proj+'/wp-admin/**']
-        }
     }, function callback() {
 
         // make watch slower for vagrant performance

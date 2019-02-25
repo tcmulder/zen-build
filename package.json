@@ -25,7 +25,7 @@
     "gulp-symlink": "^2.1.4",
     "gulp-uglifyjs": "^0.6.2",
     "pipe-error-stop": "0.0.9",
-    "far": "https://github.com/zenman/far.git",
+    "far": "git+https://gitlab.com/thinkaquamarine/far.git#master",
     "vinyl": "^0.4.6"
   },
   "dependencies": {

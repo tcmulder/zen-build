@@ -7,30 +7,24 @@
     typical for most projects
 \*------------------------------------*/
 var config = {
-    site: {
-        // client folder name
-        client: 'CLIENTNAME',
-        // project folder name
-        proj:   'PROJECTNAME'
-    },
     url: {
         // address of the home page
-        root: 'http://localhost/sites/CLIENTNAME/PROJECTNAME'
+        root: 'https://PROJECTNAME.thinkaquamarine.test'
     },
     sass: {
         // location to look for sass files - expects a relative path ending in "/"
         // uses globbing for sub directories and files
-        src:    './wp-content/themes/PROJECTNAME/sass/',
+        src:    './sass/',
         // destination for compiled css file - expects a relative path ending in "/"
-        dest:   './wp-content/themes/PROJECTNAME/'
+        dest:   './'
     },
     js: {
         // name of script to process (must not contain a "-" character)
         scripts: {
             // destination of files to process - can use globbing
-            src: './wp-content/themes/PROJECTNAME/js/scripts-src/**/*.js',
+            src: './js/scripts-src/**/*.js',
             // destination of output file - expects path and filename
-            dest: './wp-content/themes/PROJECTNAME/js/scripts.min.js'
+            dest: './js/scripts.min.js'
         }
         // you can add additional script objects using the same format as the above object
         // each will be available for processing separately
@@ -40,20 +34,20 @@ var config = {
         // name of svg sprite to process (must not contain a "-" character)
         general: {
             // destination of files to process - can use globbing
-            src: './wp-content/themes/PROJECTNAME/images/general-src/**/*.svg',
+            src: './images/general-src/**/*.svg',
             // destination of output file - expects path and (optionally) a filename
-            dest: './wp-content/themes/PROJECTNAME/images/general.sprite.svg'
+            dest: './images/general.sprite.svg'
         }
     },
     watch: {
         // files to watch - can accept a string or an array of strings
-        src: './wp-content/themes/PROJECTNAME/**/*.{php,html}'
+        src: './**/*.{php,html}'
     },
     db: {
         // local database configuration
         local: {
             // database name
-            name: 'l1_PROJECTNAME',
+            name: 'PROJECTNAME__CLIENTNAME',
             // database user
             user: 'root',
             // database password
@@ -61,7 +55,7 @@ var config = {
             // database host
             host: 'localhost',
             // table prefix
-            prefix: 'wp_',
+            prefix: 'PREFIX_',
             // destination for dumped backup files
             dumpDir: '.db/',
             // filename for dumped backup files
